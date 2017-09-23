@@ -18,6 +18,10 @@ class ASwordCombatCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+
+	UPROPERTY()
+	class UCharacterCombat* CharacterCombat;
+
 public:
 	ASwordCombatCharacter();
 
@@ -49,11 +53,7 @@ protected:
 	 */
 	void LookUpAtRate(float Rate);
 
-	/** Handler for when a touch input begins. */
-	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
-
-	/** Handler for when a touch input stops. */
-	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
+	void PrimaryAttack();
 
 protected:
 	// APawn interface

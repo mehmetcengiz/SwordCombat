@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "./SwordCombat/CharacterComponents/CharacterCombat.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
@@ -30,6 +31,9 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
 	GetCharacterMovement()->JumpZVelocity = 600.f;
 	GetCharacterMovement()->AirControl = 0.2f;
+
+	//Create and configure character combat.
+	CharacterCombat = CreateDefaultSubobject<UCharacterCombat>(FName("Character Combat"));
 
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -65,6 +69,9 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAxis("TurnRate", this, &ASwordCombatCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASwordCombatCharacter::LookUpAtRate);
+
+	//Combat attack.
+	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASwordCombatCharacter::PrimaryAttack);
 }
 
 void ASwordCombatCharacter::TurnAtRate(float Rate){
@@ -75,6 +82,10 @@ void ASwordCombatCharacter::TurnAtRate(float Rate){
 void ASwordCombatCharacter::LookUpAtRate(float Rate){
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+
+void ASwordCombatCharacter::PrimaryAttack(){
+	CharacterCombat->PrimaryAttack();
 }
 
 void ASwordCombatCharacter::MoveForward(float Value){
