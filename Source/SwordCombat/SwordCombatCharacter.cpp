@@ -12,8 +12,7 @@
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
 
-ASwordCombatCharacter::ASwordCombatCharacter()
-{
+ASwordCombatCharacter::ASwordCombatCharacter(){
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
@@ -50,8 +49,7 @@ ASwordCombatCharacter::ASwordCombatCharacter()
 //////////////////////////////////////////////////////////////////////////
 // Input
 
-void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
-{
+void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent){
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
@@ -67,47 +65,20 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAxis("TurnRate", this, &ASwordCombatCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASwordCombatCharacter::LookUpAtRate);
-
-	// handle touch devices
-	PlayerInputComponent->BindTouch(IE_Pressed, this, &ASwordCombatCharacter::TouchStarted);
-	PlayerInputComponent->BindTouch(IE_Released, this, &ASwordCombatCharacter::TouchStopped);
-
-	// VR headset functionality
-	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ASwordCombatCharacter::OnResetVR);
 }
 
-
-void ASwordCombatCharacter::OnResetVR()
-{
-	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
-}
-
-void ASwordCombatCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
-{
-		Jump();
-}
-
-void ASwordCombatCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
-{
-		StopJumping();
-}
-
-void ASwordCombatCharacter::TurnAtRate(float Rate)
-{
+void ASwordCombatCharacter::TurnAtRate(float Rate){
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
-void ASwordCombatCharacter::LookUpAtRate(float Rate)
-{
+void ASwordCombatCharacter::LookUpAtRate(float Rate){
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
-void ASwordCombatCharacter::MoveForward(float Value)
-{
-	if ((Controller != NULL) && (Value != 0.0f))
-	{
+void ASwordCombatCharacter::MoveForward(float Value){
+	if ((Controller != NULL) && (Value != 0.0f)){
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
@@ -118,14 +89,12 @@ void ASwordCombatCharacter::MoveForward(float Value)
 	}
 }
 
-void ASwordCombatCharacter::MoveRight(float Value)
-{
-	if ( (Controller != NULL) && (Value != 0.0f) )
-	{
+void ASwordCombatCharacter::MoveRight(float Value){
+	if ((Controller != NULL) && (Value != 0.0f)){
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-	
+
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
