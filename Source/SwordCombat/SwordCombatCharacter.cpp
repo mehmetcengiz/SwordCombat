@@ -74,6 +74,11 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASwordCombatCharacter::PrimaryAttack);
 }
 
+void ASwordCombatCharacter::PrimaryAttack(){
+	if (CharacterCombat == NULL) { return; }
+	CharacterCombat->PrimaryAttack();
+}
+
 void ASwordCombatCharacter::TurnAtRate(float Rate){
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
@@ -82,10 +87,6 @@ void ASwordCombatCharacter::TurnAtRate(float Rate){
 void ASwordCombatCharacter::LookUpAtRate(float Rate){
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
-}
-
-void ASwordCombatCharacter::PrimaryAttack(){
-	CharacterCombat->PrimaryAttack();
 }
 
 void ASwordCombatCharacter::MoveForward(float Value){

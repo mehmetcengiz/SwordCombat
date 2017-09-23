@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CharacterCombat.h"
+#include "./Weapons/CharacterWeapon.h"
 
 
 // Sets default values for this component's properties
@@ -31,4 +32,7 @@ void UCharacterCombat::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UCharacterCombat::PrimaryAttack(){
 	UE_LOG(LogTemp, Warning, TEXT("PrimaryAttack called."));
+	//if(!ensure(CharacterWeapon == NULL)){
+	//	UE_LOG(LogTemp,Warning,TEXT("Character Weapon should be null."))
+	//}
 }

@@ -26,4 +26,7 @@ public:
 
 	void PrimaryAttack();
 	
+	UPROPERTY()
+	class UCharacterWeapon* CharacterWeapon = nullptr;
+
 };
