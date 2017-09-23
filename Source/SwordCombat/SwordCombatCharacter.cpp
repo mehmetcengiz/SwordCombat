@@ -75,7 +75,7 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 }
 
 void ASwordCombatCharacter::PrimaryAttack(){
-	if (CharacterCombat == NULL) { return; }
+	if (ensure(CharacterCombat == NULL)){return;}
 	CharacterCombat->PrimaryAttack();
 }
 
