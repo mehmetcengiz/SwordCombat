@@ -26,7 +26,7 @@ public:
 
 	void PrimaryAttack();
 	
-	UPROPERTY()
+	UPROPERTY(EditAnywhere,Category= "Weapon")
 	class UCharacterWeapon* CharacterWeapon = nullptr;
 
 };

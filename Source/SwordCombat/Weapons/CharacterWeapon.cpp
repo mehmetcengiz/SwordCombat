@@ -21,6 +21,9 @@ void UCharacterWeapon::BeginPlay(){
 
 }
 
+void UCharacterWeapon::OnPrimaryAttack(){
+	UE_LOG(LogTemp,Warning,TEXT("CharacterWeapon > OnPrimaryAttack called."))
+}
 
 // Called every frame
 void UCharacterWeapon::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction){

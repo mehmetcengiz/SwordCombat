@@ -20,7 +20,7 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	void PrimaryAttack();
+	virtual void OnPrimaryAttack();
 
 public:
 	// Called every frame
