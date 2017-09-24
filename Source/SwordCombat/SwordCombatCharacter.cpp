@@ -8,7 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "./SwordCombat/CharacterComponents/CharacterCombat.h"
+#include "./SwordCombat/CharacterStates/CharacterState.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
@@ -33,7 +33,7 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 	GetCharacterMovement()->AirControl = 0.2f;
 
 	//Create and configure character combat.
-	//CharacterCombat = CreateDefaultSubobject<UCharacterCombat>(FName("Character Combat"));
+	//CharacterState = CreateDefaultSubobject<UCharacterState>(FName("Character Combat"));
 
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -75,15 +75,15 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 }
 
 void ASwordCombatCharacter::PrimaryAttack(){
-	if (CharacterCombat == NULL){
-		UE_LOG(LogTemp, Error, TEXT("CharacterCombat is null!!"));
+	if (CharacterState == NULL){
+		UE_LOG(LogTemp, Error, TEXT("CharacterState is null!!"));
 		return;
 	}
-	CharacterCombat->PrimaryAttack();
+	CharacterState->PrimaryAttack();
 }
 
-void ASwordCombatCharacter::SetCharacterCombat(UCharacterCombat* CharacterCombatToSet){
-	CharacterCombat = CharacterCombatToSet;
+void ASwordCombatCharacter::SetCharacterState(UCharacterState* CharacterStateToSet){
+	CharacterState = CharacterStateToSet;
 }
 
 void ASwordCombatCharacter::TurnAtRate(float Rate){

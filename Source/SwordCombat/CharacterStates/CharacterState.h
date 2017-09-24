@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "CharacterCombat.generated.h"
+#include "CharacterState.generated.h"
 
 class UCharacterWeapon;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class SWORDCOMBAT_API UCharacterCombat : public UActorComponent
+class SWORDCOMBAT_API UCharacterState : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UCharacterCombat();
+	UCharacterState();
 
 protected:
 	// Called when the game starts
