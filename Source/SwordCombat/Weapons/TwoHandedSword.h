@@ -9,11 +9,10 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SWORDCOMBAT_API UTwoHandedSword : public UCharacterWeapon
 {
 	GENERATED_BODY()
-	
 protected:
 	void OnPrimaryAttack() override;
 	

@@ -33,7 +33,7 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 	GetCharacterMovement()->AirControl = 0.2f;
 
 	//Create and configure character combat.
-	CharacterCombat = CreateDefaultSubobject<UCharacterCombat>(FName("Character Combat"));
+	//CharacterCombat = CreateDefaultSubobject<UCharacterCombat>(FName("Character Combat"));
 
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -75,8 +75,16 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 }
 
 void ASwordCombatCharacter::PrimaryAttack(){
-	if (ensure(CharacterCombat == NULL)){return;}
+	if (CharacterCombat == NULL){
+		UE_LOG(LogTemp, Error, TEXT("CharacterCombat is null!!"));
+		return;
+	}
+
 	CharacterCombat->PrimaryAttack();
+}
+
+void ASwordCombatCharacter::SetCharacterCombat(UCharacterCombat* CharacterCombatToSet){
+	CharacterCombat = CharacterCombatToSet;
 }
 
 void ASwordCombatCharacter::TurnAtRate(float Rate){

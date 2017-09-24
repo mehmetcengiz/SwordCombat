@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "SwordCombatCharacter.generated.h"
 
+class UCharacterCombat;
+
 UCLASS(config=Game)
 class ASwordCombatCharacter : public ACharacter
 {
@@ -19,9 +21,6 @@ class ASwordCombatCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
 
-	UPROPERTY()
-	class UCharacterCombat* CharacterCombat;
-
 public:
 	ASwordCombatCharacter();
 
@@ -29,6 +28,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseTurnRate;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite,Category= "Combat Component")
+	UCharacterCombat* CharacterCombat = nullptr;
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
@@ -54,6 +55,9 @@ protected:
 	void LookUpAtRate(float Rate);
 
 	void PrimaryAttack();
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void SetCharacterCombat(UCharacterCombat* CharacterCombatToSet);
 
 protected:
 	// APawn interface

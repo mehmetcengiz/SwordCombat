@@ -17,9 +17,13 @@ UCharacterCombat::UCharacterCombat(){
 // Called when the game starts
 void UCharacterCombat::BeginPlay(){
 	Super::BeginPlay();
+	
+	
 
-	// ...
+}
 
+void UCharacterCombat::EquipWeapon(UCharacterWeapon* EquippedWeapon){
+	CharacterWeapon = EquippedWeapon;
 }
 
 
@@ -27,12 +31,15 @@ void UCharacterCombat::BeginPlay(){
 void UCharacterCombat::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction){
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	
 }
 
 void UCharacterCombat::PrimaryAttack(){
 	UE_LOG(LogTemp, Warning, TEXT("PrimaryAttack called."));
-	//if(!ensure(CharacterWeapon == NULL)){
-	//	UE_LOG(LogTemp,Warning,TEXT("Character Weapon should be null."))
-	//}
+	if(CharacterWeapon == NULL){
+		UE_LOG(LogTemp, Error, TEXT("Character Weapon inside combat is null!!!!"));
+		return;
+	}
+	CharacterWeapon->OnPrimaryAttack();
+
 }
