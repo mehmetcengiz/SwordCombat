@@ -79,7 +79,6 @@ void ASwordCombatCharacter::PrimaryAttack(){
 		UE_LOG(LogTemp, Error, TEXT("CharacterCombat is null!!"));
 		return;
 	}
-
 	CharacterCombat->PrimaryAttack();
 }
 

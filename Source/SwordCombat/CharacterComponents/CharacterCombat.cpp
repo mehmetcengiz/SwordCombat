@@ -35,7 +35,7 @@ void UCharacterCombat::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 }
 
 void UCharacterCombat::PrimaryAttack(){
-	UE_LOG(LogTemp, Warning, TEXT("PrimaryAttack called."));
+	UE_LOG(LogTemp, Warning, TEXT("CharacterCombat.cpp > PrimaryAttack called."));
 	if(CharacterWeapon == NULL){
 		UE_LOG(LogTemp, Error, TEXT("Character Weapon inside combat is null!!!!"));
 		return;
