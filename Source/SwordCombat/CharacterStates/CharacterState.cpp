@@ -22,9 +22,6 @@ void UCharacterState::BeginPlay(){
 
 }
 
-void UCharacterState::EquipWeapon(UCharacterWeapon* EquippedWeapon){
-	CharacterWeapon = EquippedWeapon;
-}
 
 
 // Called every frame
@@ -36,10 +33,5 @@ void UCharacterState::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 void UCharacterState::PrimaryAttack(){
 	UE_LOG(LogTemp, Warning, TEXT("CharacterState.cpp > PrimaryAttack called."));
-	if(CharacterWeapon == NULL){
-		UE_LOG(LogTemp, Error, TEXT("Character Weapon inside combat is null!!!!"));
-		return;
-	}
-	CharacterWeapon->OnPrimaryAttack();
 
 }

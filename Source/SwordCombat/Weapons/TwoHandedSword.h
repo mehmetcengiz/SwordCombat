@@ -14,7 +14,7 @@ class SWORDCOMBAT_API UTwoHandedSword : public UCharacterWeapon
 {
 	GENERATED_BODY()
 protected:
-	void OnPrimaryAttack() override;
+	virtual void OnPrimaryAttack() override;
 	
 	
 	
