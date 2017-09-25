@@ -19,8 +19,14 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	
+	/**Damage*/
+	UPROPERTY(EditDefaultsOnly,Category="Weapon Stats")
+	float Damage = 10;
 
-
+	/**Weapon mesh. */
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon Options")
+	USkeletalMeshComponent* WeaponMesh = nullptr;
 
 public:
 	// Called every frame

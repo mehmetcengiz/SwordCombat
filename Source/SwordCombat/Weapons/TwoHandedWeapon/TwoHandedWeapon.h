@@ -16,6 +16,6 @@ class SWORDCOMBAT_API UTwoHandedWeapon : public UCharacterWeapon
 protected:
 	virtual void OnPrimaryAttack() override;
 	
-	
+	void Hit(float Damage);
 	
 };
