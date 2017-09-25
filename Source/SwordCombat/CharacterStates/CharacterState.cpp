@@ -31,7 +31,7 @@ void UCharacterState::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	
 }
 
-void UCharacterState::PrimaryAttack(){
-	UE_LOG(LogTemp, Warning, TEXT("CharacterState.cpp > PrimaryAttack called."));
+void UCharacterState::OnRightButtonPressed(){
+	UE_LOG(LogTemp, Warning, TEXT("CharacterState.cpp > OnRightButtonPressed called."));
 
 }

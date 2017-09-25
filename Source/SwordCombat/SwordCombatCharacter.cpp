@@ -71,15 +71,15 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASwordCombatCharacter::LookUpAtRate);
 
 	//Combat attack.
-	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASwordCombatCharacter::PrimaryAttack);
+	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASwordCombatCharacter::OnRightButtonPressed);
 }
 
-void ASwordCombatCharacter::PrimaryAttack(){
+void ASwordCombatCharacter::OnRightButtonPressed(){
 	if (CharacterState == NULL){
 		UE_LOG(LogTemp, Error, TEXT("CharacterState is null!!"));
 		return;
 	}
-	CharacterState->PrimaryAttack();
+	CharacterState->OnRightButtonPressed();
 }
 
 void ASwordCombatCharacter::SetCharacterState(UCharacterState* CharacterStateToSet){

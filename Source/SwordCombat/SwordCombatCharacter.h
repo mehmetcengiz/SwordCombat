@@ -54,7 +54,7 @@ protected:
 	 */
 	void LookUpAtRate(float Rate);
 
-	void PrimaryAttack();
+	void OnRightButtonPressed();
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SetCharacterState(UCharacterState* CharacterStateToSet);

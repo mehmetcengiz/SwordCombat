@@ -24,7 +24,7 @@ protected:
 	void EquipWeapon(UCharacterWeapon* EquippedWeapon);
 	
 public:
-	void PrimaryAttack() override;
+	void OnRightButtonPressed() override;
 	
 	
 	

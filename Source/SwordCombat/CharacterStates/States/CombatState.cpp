@@ -7,9 +7,9 @@ void UCombatState::EquipWeapon(UCharacterWeapon* EquippedWeapon) {
 	CharacterWeapon = EquippedWeapon;
 }
 
-void UCombatState::PrimaryAttack(){
-	Super::PrimaryAttack();
-	UE_LOG(LogTemp, Warning, TEXT("Combat State> PrimaryAttack."));
+void UCombatState::OnRightButtonPressed(){
+	Super::OnRightButtonPressed();
+	UE_LOG(LogTemp, Warning, TEXT("Combat State> OnRightButtonPressed."));
 
 	if (CharacterWeapon == NULL){
 		UE_LOG(LogTemp, Error, TEXT("Combat State> Character Weapon is null."));

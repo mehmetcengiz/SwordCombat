@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Weapons/CharacterWeapon.h"
-#include "TwoHandedSword.generated.h"
+#include "TwoHandedWeapon.generated.h"
 
 /**
  * 
  */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class SWORDCOMBAT_API UTwoHandedSword : public UCharacterWeapon
+class SWORDCOMBAT_API UTwoHandedWeapon : public UCharacterWeapon
 {
 	GENERATED_BODY()
 protected:
