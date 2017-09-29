@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/SceneComponent.h"
+#include "Components/ActorComponent.h"
 #include "CharacterWeapon.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 
-class SWORDCOMBAT_API UCharacterWeapon : public USceneComponent {
+class SWORDCOMBAT_API UCharacterWeapon : public UActorComponent {
 	GENERATED_BODY()
 
 public:
@@ -23,11 +23,7 @@ protected:
 	/**Damage*/
 	UPROPERTY(EditDefaultsOnly,Category="Weapon Stats")
 	float Damage = 10;
-
-	/**Weapon mesh. */
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon Options")
-	UStaticMeshComponent* WeaponMesh = nullptr;
-
+	
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

@@ -8,3 +8,7 @@ void UTwoHandedWeapon::OnPrimaryAttack(){
 
 	UE_LOG(LogTemp, Warning, TEXT("TwoHandedWeapon > OnPrimaryAttack called."))
 }
+
+void UTwoHandedWeapon::SetWeaponStaticMesh(UStaticMeshComponent* WeaponMeshToSet){
+	WeaponMesh = WeaponMeshToSet;
+}
