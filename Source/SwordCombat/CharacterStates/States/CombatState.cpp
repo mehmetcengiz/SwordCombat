@@ -9,6 +9,7 @@ void UCombatState::EquipWeapon(UCharacterWeapon* EquippedWeapon) {
 
 void UCombatState::OnRightButtonPressed(){
 	Super::OnRightButtonPressed();
+
 	UE_LOG(LogTemp, Warning, TEXT("Combat State> OnRightButtonPressed."));
 
 	if (CharacterWeapon == NULL){

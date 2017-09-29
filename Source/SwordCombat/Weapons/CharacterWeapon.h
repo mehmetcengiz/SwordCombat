@@ -26,7 +26,7 @@ protected:
 
 	/**Weapon mesh. */
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon Options")
-	USkeletalMeshComponent* WeaponMesh = nullptr;
+	UStaticMeshComponent* WeaponMesh = nullptr;
 
 public:
 	// Called every frame

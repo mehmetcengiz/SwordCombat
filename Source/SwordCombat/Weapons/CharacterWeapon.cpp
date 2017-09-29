@@ -17,8 +17,6 @@ UCharacterWeapon::UCharacterWeapon(){
 void UCharacterWeapon::BeginPlay(){
 	Super::BeginPlay();
 
-	// ...
-
 }
 
 void UCharacterWeapon::OnPrimaryAttack(){
