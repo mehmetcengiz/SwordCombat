@@ -55,9 +55,9 @@ protected:
 	void LookUpAtRate(float Rate);
 
 	void OnRightButtonPressed();
-
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void SetCharacterState(UCharacterState* CharacterStateToSet);
+	
+	UFUNCTION(BlueprintCallable, Category = "Character State")
+	void SwitchCharacterState(int32 CharacterStateIndex);
 
 protected:
 	// APawn interface

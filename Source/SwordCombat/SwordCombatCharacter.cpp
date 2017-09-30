@@ -9,6 +9,7 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "./SwordCombat/CharacterStates/CharacterState.h"
+#include "./CharacterStates/States/CombatState.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
@@ -48,6 +49,8 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+	SwitchCharacterState(1);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -82,8 +85,17 @@ void ASwordCombatCharacter::OnRightButtonPressed(){
 	CharacterState->OnRightButtonPressed();
 }
 
-void ASwordCombatCharacter::SetCharacterState(UCharacterState* CharacterStateToSet){
-	CharacterState = CharacterStateToSet;
+void ASwordCombatCharacter::SwitchCharacterState(int32 CharacterStateIndex){
+
+	if(CharacterStateIndex == 0){
+		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Combat state"));
+		CharacterState = CreateDefaultSubobject<UCombatState>(TEXT("Combat State"));
+		
+	}else if(CharacterStateIndex == 1){
+		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Interact state"));
+		//CharacterState = CreateDefaultSubobject<U>()
+	}
+
 }
 
 void ASwordCombatCharacter::TurnAtRate(float Rate){
