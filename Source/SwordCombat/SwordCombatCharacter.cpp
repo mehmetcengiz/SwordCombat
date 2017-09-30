@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "./SwordCombat/CharacterStates/CharacterState.h"
 #include "./CharacterStates/States/CombatState.h"
+#include "./CharacterStates/States/InteractState.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
@@ -50,7 +51,7 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
-	SwitchCharacterState(1);
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -77,6 +78,12 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASwordCombatCharacter::OnRightButtonPressed);
 }
 
+void ASwordCombatCharacter::BeginPlay(){
+	Super::BeginPlay();
+	UE_LOG(LogTemp, Warning, TEXT("Game has started."));
+	SwitchCharacterState(1);
+}
+
 void ASwordCombatCharacter::OnRightButtonPressed(){
 	if (CharacterState == NULL){
 		UE_LOG(LogTemp, Error, TEXT("CharacterState is null!!"));
@@ -89,11 +96,15 @@ void ASwordCombatCharacter::SwitchCharacterState(int32 CharacterStateIndex){
 
 	if(CharacterStateIndex == 0){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Combat state"));
-		CharacterState = CreateDefaultSubobject<UCombatState>(TEXT("Combat State"));
+		if(CharacterState)
+			CharacterState->DestroyComponent(false);
+		CharacterState = ConstructObject<UCombatState>(UCombatState::StaticClass(), this, TEXT("Combat State"));
 		
 	}else if(CharacterStateIndex == 1){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Interact state"));
-		//CharacterState = CreateDefaultSubobject<U>()
+		if (CharacterState)
+			CharacterState->DestroyComponent(false);
+		CharacterState = ConstructObject<UInteractState>(UInteractState::StaticClass(), this, TEXT("Interact State"));
 	}
 
 }
