@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "SwordCombatCharacter.generated.h"
 #include "./WorldProps/CharacterStateTrigger.h"
+#include "SwordCombatCharacter.generated.h"
 
 class UCharacterState;
 

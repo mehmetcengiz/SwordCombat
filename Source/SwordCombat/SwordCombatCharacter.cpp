@@ -81,6 +81,9 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 void ASwordCombatCharacter::BeginPlay(){
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("Game has started."));
+	
+	/*Create default chracter state*/
+	SwitchCharacterState(ECharacterState::INTERACTSTATE);
 }
 
 void ASwordCombatCharacter::OnRightButtonPressed(){
