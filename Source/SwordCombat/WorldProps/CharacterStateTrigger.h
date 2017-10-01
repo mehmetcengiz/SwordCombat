@@ -7,12 +7,10 @@
 #include "CharacterStateTrigger.generated.h"
 
 UENUM()
-namespace ECharacterState {
-	enum Type {
-		INTERACTSTATE               UMETA(DisplayName = "Interact State"),
-		COMBATSTATE                 UMETA(DisplayName = "Combat State"),
-	};
-}
+enum class ECharacterState : uint8 {
+	INTERACTSTATE	UMETA(DisplayName = "Interact State"),
+	COMBATSTATE		UMETA(DisplayName = "Combat State")
+};
 
 UCLASS()
 class SWORDCOMBAT_API ACharacterStateTrigger : public AActor {
@@ -27,7 +25,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character State")
-	TEnumAsByte<ECharacterState::Type> CharacterState;
+	TEnumAsByte<ECharacterState> CharacterState;
 
 public:
 	// Called every frame

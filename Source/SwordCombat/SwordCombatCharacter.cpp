@@ -81,7 +81,6 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 void ASwordCombatCharacter::BeginPlay(){
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("Game has started."));
-	SwitchCharacterState(1);
 }
 
 void ASwordCombatCharacter::OnRightButtonPressed(){
@@ -92,15 +91,15 @@ void ASwordCombatCharacter::OnRightButtonPressed(){
 	CharacterState->OnRightButtonPressed();
 }
 
-void ASwordCombatCharacter::SwitchCharacterState(int32 CharacterStateIndex){
+void ASwordCombatCharacter::SwitchCharacterState(ECharacterState CharacterStateEnum){
 
-	if(CharacterStateIndex == 0){
+	if(CharacterStateEnum == ECharacterState::COMBATSTATE){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Combat state"));
 		if(CharacterState)
 			CharacterState->DestroyComponent(false);
 		CharacterState = ConstructObject<UCombatState>(UCombatState::StaticClass(), this, TEXT("Combat State"));
 		
-	}else if(CharacterStateIndex == 1){
+	}else if(CharacterStateEnum == ECharacterState::INTERACTSTATE){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Interact state"));
 		if (CharacterState)
 			CharacterState->DestroyComponent(false);

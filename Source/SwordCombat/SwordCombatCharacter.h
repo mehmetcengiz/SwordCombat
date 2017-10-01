@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "SwordCombatCharacter.generated.h"
+#include "./WorldProps/CharacterStateTrigger.h"
 
 class UCharacterState;
 
@@ -60,7 +61,8 @@ protected:
 	void OnRightButtonPressed();
 	
 	UFUNCTION(BlueprintCallable, Category = "Character State")
-	void SwitchCharacterState(int32 CharacterStateIndex);
+	void SwitchCharacterState(ECharacterState CharacterStateEnum);
+
 
 protected:
 	// APawn interface
