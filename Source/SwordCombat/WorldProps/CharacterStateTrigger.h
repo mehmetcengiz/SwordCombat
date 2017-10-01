@@ -8,8 +8,8 @@
 
 UENUM()
 enum class ECharacterState : uint8 {
-	INTERACTSTATE	UMETA(DisplayName = "Interact State"),
-	COMBATSTATE		UMETA(DisplayName = "Combat State")
+	INTERACT	UMETA(DisplayName = "Interact State"),
+	COMBAT		UMETA(DisplayName = "Combat State")
 };
 
 UCLASS()

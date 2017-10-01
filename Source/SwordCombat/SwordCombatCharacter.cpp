@@ -83,7 +83,7 @@ void ASwordCombatCharacter::BeginPlay(){
 	UE_LOG(LogTemp, Warning, TEXT("Game has started."));
 	
 	/*Create default chracter state*/
-	SwitchCharacterState(ECharacterState::INTERACTSTATE);
+	SwitchCharacterState(ECharacterState::INTERACT);
 }
 
 void ASwordCombatCharacter::OnRightButtonPressed(){
@@ -96,13 +96,13 @@ void ASwordCombatCharacter::OnRightButtonPressed(){
 
 void ASwordCombatCharacter::SwitchCharacterState(ECharacterState CharacterStateEnum){
 
-	if(CharacterStateEnum == ECharacterState::COMBATSTATE){
+	if(CharacterStateEnum == ECharacterState::COMBAT){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Combat state"));
 		if(CharacterState)
 			CharacterState->DestroyComponent(false);
 		CharacterState = ConstructObject<UCombatState>(UCombatState::StaticClass(), this, TEXT("Combat State"));
 		
-	}else if(CharacterStateEnum == ECharacterState::INTERACTSTATE){
+	}else if(CharacterStateEnum == ECharacterState::INTERACT){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Interact state"));
 		if (CharacterState)
 			CharacterState->DestroyComponent(false);
