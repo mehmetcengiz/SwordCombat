@@ -8,6 +8,7 @@
 #include "SwordCombatCharacter.generated.h"
 
 class UCharacterState;
+class UCharacterWeapon;
 class UInventory;
 
 UCLASS(config=Game)
@@ -79,6 +80,8 @@ protected:
 	UPROPERTY(Category = "Character", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UInventory* CharacterInventory = nullptr;
 
+public:
+	UCharacterWeapon* GetPrimaryWeapon() const;
 
 };
 

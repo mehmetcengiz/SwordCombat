@@ -102,7 +102,7 @@ void ASwordCombatCharacter::SwitchCharacterState(ECharacterState CharacterStateE
 		if(CharacterState)
 			CharacterState->DestroyComponent(false);
 		CharacterState = ConstructObject<UCombatState>(UCombatState::StaticClass(), this, TEXT("Combat State"));
-		
+
 	}else if(CharacterStateEnum == ECharacterState::INTERACT){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Interact state"));
 		if (CharacterState)
@@ -145,4 +145,8 @@ void ASwordCombatCharacter::MoveRight(float Value){
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
+}
+
+UCharacterWeapon* ASwordCombatCharacter::GetPrimaryWeapon() const{
+	return CharacterInventory->GetPrimaryWeapon();
 }
