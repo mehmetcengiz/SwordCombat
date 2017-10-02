@@ -8,6 +8,7 @@
 #include "SwordCombatCharacter.generated.h"
 
 class UCharacterState;
+class UInventory;
 
 UCLASS(config=Game)
 class ASwordCombatCharacter : public ACharacter
@@ -34,8 +35,21 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
+protected:
+	// APawn interface
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	// End of APawn interface
+
+public:
+	/** Returns CameraBoom subobject **/
+	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	/** Returns FollowCamera subobject **/
+	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 protected:
+
+	UFUNCTION(BlueprintCallable, Category = "Character State")
+	void SwitchCharacterState(ECharacterState CharacterStateEnum);
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -58,21 +72,13 @@ protected:
 	 */
 	void LookUpAtRate(float Rate);
 
+	/**Executes when PrimaryAttack pressed.*/
 	void OnRightButtonPressed();
 	
-	UFUNCTION(BlueprintCallable, Category = "Character State")
-	void SwitchCharacterState(ECharacterState CharacterStateEnum);
+	/*Inventory*/
+	UPROPERTY(Category = "Character", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UInventory* CharacterInventory = nullptr;
 
 
-protected:
-	// APawn interface
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	// End of APawn interface
-
-public:
-	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-	/** Returns FollowCamera subobject **/
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };
 

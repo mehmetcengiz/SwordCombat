@@ -11,6 +11,7 @@
 #include "./SwordCombat/CharacterStates/CharacterState.h"
 #include "./CharacterStates/States/CombatState.h"
 #include "./CharacterStates/States/InteractState.h"
+#include "./CharacterComponents/Inventory.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
@@ -33,10 +34,7 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
 	GetCharacterMovement()->JumpZVelocity = 600.f;
 	GetCharacterMovement()->AirControl = 0.2f;
-
-	//Create and configure character combat.
-	//CharacterState = CreateDefaultSubobject<UCharacterState>(FName("Character Combat"));
-
+	
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
@@ -51,7 +49,7 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
-
+	CharacterInventory = CreateDefaultSubobject<UInventory>(TEXT("Character Inventory"));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -84,6 +82,9 @@ void ASwordCombatCharacter::BeginPlay(){
 	
 	/*Create default chracter state*/
 	SwitchCharacterState(ECharacterState::INTERACT);
+/*
+	UCharacterWeapon* CurrentWeapon = GetOwner()-> FindComponentByClass<UCharacterWeapon>();
+	CharacterInventory->SetPrimaryWeapon(CurrentWeapon);*/
 }
 
 void ASwordCombatCharacter::OnRightButtonPressed(){
