@@ -12,7 +12,6 @@
 #include "./CharacterStates/States/CombatState.h"
 #include "./CharacterStates/States/InteractState.h"
 #include "./CharacterComponents/Inventory.h"
-#include "Animation/AnimBlueprint.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
@@ -158,12 +157,5 @@ void ASwordCombatCharacter::SwitchAnimationInstance(){
 		UE_LOG(LogTemp, Warning, TEXT("Character State is NULL")); 
 		return;
 	}
-
-	UAnimBlueprint* CharacterAnimInstance = CharacterState->GetAnimInstance();
-
-	if(CharacterAnimInstance != NULL){
-		UE_LOG(LogTemp,Warning,TEXT("I got an animinstance."));
-	}else{
-		UE_LOG(LogTemp, Warning, TEXT("I havent got anything"));
-	}
+	//TODO switch animation depends on weapon animation or interactstate animations etc.
 }

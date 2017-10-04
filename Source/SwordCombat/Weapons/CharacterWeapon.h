@@ -26,11 +26,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly,Category="Weapon Stats")
 	float Damage = 10;
 	
-	UPROPERTY(EditAnywhere, Category = "Animations")
-	UAnimBlueprint* CharacterAnimationInstance;
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	virtual void OnPrimaryAttack();
-	UAnimBlueprint* GetAnimInstance() const;
 };

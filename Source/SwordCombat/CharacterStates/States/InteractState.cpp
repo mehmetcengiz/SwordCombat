@@ -9,9 +9,4 @@ void UInteractState::OnRightButtonPressed() {
 	
 }
 
-UAnimBlueprint* UInteractState::GetAnimInstance(){
-	Super::GetAnimInstance();
-	return nullptr;
-}
-
 

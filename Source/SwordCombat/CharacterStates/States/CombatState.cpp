@@ -23,13 +23,3 @@ void UCombatState::OnRightButtonPressed(){
 	CharacterWeapon->OnPrimaryAttack();
 
 }
-
-UAnimBlueprint* UCombatState::GetAnimInstance() {
-	Super::GetAnimInstance();
-
-	if (CharacterWeapon == NULL) {
-		UE_LOG(LogTemp, Error, TEXT("Combat State> Character Weapon is null!!!!!!!!!!!!!!!!!!."));
-		return nullptr;
-	}
-	return CharacterWeapon->GetAnimInstance();
-}

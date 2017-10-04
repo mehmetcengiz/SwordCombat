@@ -27,6 +27,5 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Equip Weapon")
 	void EquipWeapon();
 	
-	UAnimBlueprint* GetAnimInstance() override;
 	
 };

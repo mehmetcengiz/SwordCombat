@@ -28,7 +28,3 @@ void UCharacterWeapon::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 	// ...
 }
-
-UAnimBlueprint* UCharacterWeapon::GetAnimInstance() const{
-	return CharacterAnimationInstance;
-}

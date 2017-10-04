@@ -36,8 +36,4 @@ void UCharacterState::OnRightButtonPressed(){
 
 }
 
-UAnimBlueprint* UCharacterState::GetAnimInstance(){
-	return nullptr;
-}
-
 

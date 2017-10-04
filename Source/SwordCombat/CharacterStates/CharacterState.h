@@ -29,5 +29,4 @@ public:
 
 	virtual void OnRightButtonPressed();
 	
-	virtual UAnimBlueprint* GetAnimInstance();
 };
