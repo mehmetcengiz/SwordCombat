@@ -83,6 +83,7 @@ protected:
 public:
 	UCharacterWeapon* GetPrimaryWeapon() const;
 	
+	UFUNCTION(BlueprintCallable,Category="Animations")
 	void SwitchAnimationInstance();
 
 };

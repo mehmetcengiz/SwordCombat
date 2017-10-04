@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Animation/AnimBlueprint.h"
 #include "CharacterState.generated.h"
 
 class UCharacterWeapon;
+class UAnimBlueprint;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SWORDCOMBAT_API UCharacterState : public UActorComponent
@@ -28,4 +28,6 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	virtual void OnRightButtonPressed();
+	
+	virtual UAnimBlueprint* GetAnimInstance();
 };

@@ -154,5 +154,16 @@ UCharacterWeapon* ASwordCombatCharacter::GetPrimaryWeapon() const{
 }
 
 void ASwordCombatCharacter::SwitchAnimationInstance(){
-	//TODO Reach animation instance from character state.
+	if (CharacterState == NULL){
+		UE_LOG(LogTemp, Warning, TEXT("Character State is NULL")); 
+		return;
+	}
+
+	UAnimBlueprint* CharacterAnimInstance = CharacterState->GetAnimInstance();
+
+	if(CharacterAnimInstance != NULL){
+		UE_LOG(LogTemp,Warning,TEXT("I got an animinstance."));
+	}else{
+		UE_LOG(LogTemp, Warning, TEXT("I havent got anything"));
+	}
 }

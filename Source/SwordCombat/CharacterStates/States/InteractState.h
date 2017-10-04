@@ -18,5 +18,6 @@ public:
 	
 	void OnRightButtonPressed() override;
 	
-	
+
+	UAnimBlueprint* GetAnimInstance() override;
 };
