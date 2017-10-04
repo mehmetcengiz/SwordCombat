@@ -15,6 +15,7 @@ class SWORDCOMBAT_API UInteractState : public UCharacterState
 	GENERATED_BODY()
 
 public:
+	
 	void OnRightButtonPressed() override;
 	
 	

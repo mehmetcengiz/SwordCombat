@@ -9,7 +9,6 @@ UCharacterWeapon::UCharacterWeapon(){
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 
@@ -28,4 +27,8 @@ void UCharacterWeapon::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+UAnimBlueprint* UCharacterWeapon::GetAnimInstance() const{
+	return CharacterAnimationInstance;
 }

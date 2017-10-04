@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Animation/AnimBlueprint.h"
 #include "CharacterState.generated.h"
 
 class UCharacterWeapon;

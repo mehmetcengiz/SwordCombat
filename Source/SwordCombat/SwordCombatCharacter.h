@@ -82,6 +82,8 @@ protected:
 
 public:
 	UCharacterWeapon* GetPrimaryWeapon() const;
+	
+	void SwitchAnimationInstance();
 
 };
 

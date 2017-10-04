@@ -35,3 +35,5 @@ void UCharacterState::OnRightButtonPressed(){
 	UE_LOG(LogTemp, Warning, TEXT("CharacterState.cpp > OnRightButtonPressed called."));
 
 }
+
+

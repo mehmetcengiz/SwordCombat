@@ -12,6 +12,7 @@
 #include "./CharacterStates/States/CombatState.h"
 #include "./CharacterStates/States/InteractState.h"
 #include "./CharacterComponents/Inventory.h"
+#include "Animation/AnimBlueprint.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
@@ -50,6 +51,7 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
 	CharacterInventory = CreateDefaultSubobject<UInventory>(TEXT("Character Inventory"));
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -149,4 +151,8 @@ void ASwordCombatCharacter::MoveRight(float Value){
 
 UCharacterWeapon* ASwordCombatCharacter::GetPrimaryWeapon() const{
 	return CharacterInventory->GetPrimaryWeapon();
+}
+
+void ASwordCombatCharacter::SwitchAnimationInstance(){
+	//TODO Reach animation instance from character state.
 }

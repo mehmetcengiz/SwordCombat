@@ -23,7 +23,7 @@ protected:
 	
 public:
 	void OnRightButtonPressed() override;
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Equip Weapon")
 	void EquipWeapon();
 	
