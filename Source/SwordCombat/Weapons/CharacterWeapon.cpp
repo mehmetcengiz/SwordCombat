@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CharacterWeapon.h"
+#include "./Components/StaticMeshComponent.h"
 
 
 // Sets default values for this component's properties
@@ -26,5 +27,4 @@ void UCharacterWeapon::OnPrimaryAttack(){
 void UCharacterWeapon::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction){
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
 }
