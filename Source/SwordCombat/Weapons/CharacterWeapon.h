@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
 #include "ConstructorHelpers.h"
 #include "CharacterWeapon.generated.h"
 
@@ -11,7 +10,7 @@ class UAnimBlueprint;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 
-class SWORDCOMBAT_API UCharacterWeapon : public UActorComponent {
+class SWORDCOMBAT_API UCharacterWeapon : public UStaticMeshComponent {
 	GENERATED_BODY()
 
 public:
