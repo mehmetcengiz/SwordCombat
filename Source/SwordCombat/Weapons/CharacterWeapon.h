@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ConstructorHelpers.h"
+#include "Engine/StaticMesh.h"
 #include "CharacterWeapon.generated.h"
 
 class UAnimBlueprint;

@@ -19,10 +19,6 @@ void UCharacterWeapon::BeginPlay(){
 
 }
 
-void UCharacterWeapon::OnComponentCreated(){
-	UE_LOG(LogTemp, Warning, TEXT("CharacterWeapon >> Component Created"));
-}
-
 void UCharacterWeapon::OnPrimaryAttack(){
 	UE_LOG(LogTemp,Warning,TEXT("CharacterWeapon > OnPrimaryAttack called."))
 }

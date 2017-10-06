@@ -18,6 +18,4 @@ protected:
 	virtual void BeginPlay() override;
 	
 	virtual void OnPrimaryAttack() override;
-
-	virtual void OnComponentCreated() override;
 };

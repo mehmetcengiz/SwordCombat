@@ -163,11 +163,5 @@ void ASwordCombatCharacter::SwitchAnimationInstance(){
 
 void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass){
 
-	auto Weapon = ConstructObject<UCharacterWeapon>(WeaponClass, this, TEXT("Current Weapon"));	
-	Weapon->OnComponentCreated();
-
-	CharacterInventory->SetPrimaryWeapon(Weapon);
-
-
 }
 
