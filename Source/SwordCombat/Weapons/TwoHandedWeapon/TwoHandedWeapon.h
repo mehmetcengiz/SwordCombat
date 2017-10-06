@@ -15,13 +15,7 @@ class SWORDCOMBAT_API UTwoHandedWeapon : public UCharacterWeapon
 	GENERATED_BODY()
 protected:
 	virtual void OnPrimaryAttack() override;
-	
 
-	/**Weapon mesh. */
-	UPROPERTY()
-	UStaticMeshComponent* WeaponMesh = nullptr;
+	virtual void OnComponentCreated() override;
 
-	/*Setting weapon static mesh*/
-	UFUNCTION(BlueprintCallable,Category="Weapons Mesh")
-	void SetWeaponStaticMesh(UStaticMeshComponent* WeaponMeshToSet);
 };

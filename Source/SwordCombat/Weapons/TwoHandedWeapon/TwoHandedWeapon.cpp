@@ -9,6 +9,7 @@ void UTwoHandedWeapon::OnPrimaryAttack(){
 	UE_LOG(LogTemp, Warning, TEXT("TwoHandedWeapon > OnPrimaryAttack called."))
 }
 
-void UTwoHandedWeapon::SetWeaponStaticMesh(UStaticMeshComponent* WeaponMeshToSet){
-	WeaponMesh = WeaponMeshToSet;
+void UTwoHandedWeapon::OnComponentCreated(){
+	Super::OnComponentCreated();
+	UE_LOG(LogTemp, Warning, TEXT("Twinblade >> OnComponent Created"));
 }

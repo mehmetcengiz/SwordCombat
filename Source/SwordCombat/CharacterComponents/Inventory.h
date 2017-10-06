@@ -30,6 +30,7 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="Inventory")
 	void SetPrimaryWeapon(UCharacterWeapon* WeaponToSet);
+
 	UCharacterWeapon* GetPrimaryWeapon() const { return PrimaryWeapon; };
 
 	

@@ -12,6 +12,7 @@
 #include "./CharacterStates/States/CombatState.h"
 #include "./CharacterStates/States/InteractState.h"
 #include "./CharacterComponents/Inventory.h"
+#include "./Weapons/CharacterWeapon.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
@@ -159,3 +160,14 @@ void ASwordCombatCharacter::SwitchAnimationInstance(){
 	}
 	//TODO switch animation depends on weapon animation or interactstate animations etc.
 }
+
+void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass){
+
+	auto Weapon = ConstructObject<UCharacterWeapon>(WeaponClass, this, TEXT("Current Weapon"));	
+	Weapon->OnComponentCreated();
+
+	CharacterInventory->SetPrimaryWeapon(Weapon);
+
+
+}
+

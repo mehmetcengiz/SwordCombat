@@ -14,20 +14,10 @@ class SWORDCOMBAT_API UTwinBlade : public UCharacterWeapon
 {
 	GENERATED_BODY()
 protected:
-	virtual void OnPrimaryAttack() override;
-
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
-	/**Weapon mesh. */
-	UPROPERTY()
-	UStaticMeshComponent* WeaponMesh_R = nullptr;
-	/**Weapon mesh. */
-	UPROPERTY()
-	UStaticMeshComponent* WeaponMesh_L = nullptr;
-
-	/*Setting weapon static mesh*/
-	UFUNCTION(BlueprintCallable, Category = "Weapons Mesh")
-	void SetWeaponStaticMesh(UStaticMeshComponent* WeaponMesh_RToSet, UStaticMeshComponent* WeaponMesh_LToSet);
 	
+	virtual void OnPrimaryAttack() override;
+
+	virtual void OnComponentCreated() override;
 };

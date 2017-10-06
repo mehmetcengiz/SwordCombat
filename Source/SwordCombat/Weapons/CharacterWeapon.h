@@ -28,5 +28,7 @@ protected:
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	virtual void OnComponentCreated();
 	virtual void OnPrimaryAttack();
 };

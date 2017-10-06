@@ -86,5 +86,8 @@ public:
 	UFUNCTION(BlueprintCallable,Category="Animations")
 	void SwitchAnimationInstance();
 
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void EquipWeapon(UClass* WeaponClass);
+
 };
 
