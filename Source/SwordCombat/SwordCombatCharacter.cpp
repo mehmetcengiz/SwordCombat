@@ -162,12 +162,18 @@ void ASwordCombatCharacter::SwitchAnimationInstance(){
 	//TODO switch animation depends on weapon animation or interactstate animations etc.
 }
 
-void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {
+void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {	
 	FName fnWeaponSocket = TEXT("TwinBladeSheath");
-	auto Weapon = GetWorld()->SpawnActor<ACharacterWeaponActor>(WeaponClass);
+	const FVector spawnLocation = GetMesh()->GetSocketLocation("TwinBladeSheath");
+	const FRotator spawnRotation = GetMesh()->GetSocketRotation("TwinBladeSheath");
+	const FActorSpawnParameters spawnParams;
+	auto Weapon = GetWorld()->SpawnActor<ACharacterWeaponActor>(WeaponClass, spawnLocation, spawnRotation, spawnParams);
+	Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,fnWeaponSocket);
 	
-	//Weapon->AttachRootComponentToActor(this, fnWeaponSocket, EAttachLocation::SnapToTarget, true);	
-	//Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,fnWeaponSocket);
+	if(CharacterInventory){
+		CharacterInventory->SetPrimaryWeapon(Weapon);
+	}
 }
+
 
 
