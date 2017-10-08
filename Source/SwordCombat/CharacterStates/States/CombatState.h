@@ -7,7 +7,7 @@
 #include "CombatState.generated.h"
 
 
-class UCharacterWeapon;
+class ACharacterWeaponActor;
 /**
  * 
  */
@@ -18,7 +18,7 @@ class SWORDCOMBAT_API UCombatState : public UCharacterState
 protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-	UCharacterWeapon* CharacterWeapon = nullptr;
+	ACharacterWeaponActor* CharacterWeapon = nullptr;
 
 	
 public:

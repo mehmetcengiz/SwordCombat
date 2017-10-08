@@ -14,7 +14,7 @@ class SWORDCOMBAT_API ACharacterWeaponActor : public AStaticMeshActor
 {
 	GENERATED_BODY()
 	
-protected:
+public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 

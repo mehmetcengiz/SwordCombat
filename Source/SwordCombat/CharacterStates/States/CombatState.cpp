@@ -2,7 +2,7 @@
 
 #include "CombatState.h"
 #include "SwordCombatCharacter.h"
-#include "./Weapons/CharacterWeapon.h"
+#include "./Weapons/CharacterWeaponActor.h"
 
 void UCombatState::EquipWeapon() {
 	CharacterWeapon = static_cast<ASwordCombatCharacter*>(GetOwner())->GetPrimaryWeapon();

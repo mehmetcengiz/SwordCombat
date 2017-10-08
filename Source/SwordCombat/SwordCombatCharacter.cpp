@@ -12,7 +12,8 @@
 #include "./CharacterStates/States/CombatState.h"
 #include "./CharacterStates/States/InteractState.h"
 #include "./CharacterComponents/Inventory.h"
-#include "./Weapons/CharacterWeapon.h"
+#include "./Weapons/CharacterWeaponActor.h"
+#include "./Components/SkeletalMeshComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
@@ -83,7 +84,7 @@ void ASwordCombatCharacter::BeginPlay(){
 	UE_LOG(LogTemp, Warning, TEXT("Game has started."));
 	
 	/*Create default chracter state*/
-	SwitchCharacterState(ECharacterState::INTERACT);
+	SwitchCharacterState(ECharacterState::COMBAT);
 /*
 	UCharacterWeapon* CurrentWeapon = GetOwner()-> FindComponentByClass<UCharacterWeapon>();
 	CharacterInventory->SetPrimaryWeapon(CurrentWeapon);*/
@@ -149,7 +150,7 @@ void ASwordCombatCharacter::MoveRight(float Value){
 	}
 }
 
-UCharacterWeapon* ASwordCombatCharacter::GetPrimaryWeapon() const{
+ACharacterWeaponActor* ASwordCombatCharacter::GetPrimaryWeapon() const{
 	return CharacterInventory->GetPrimaryWeapon();
 }
 
@@ -161,7 +162,12 @@ void ASwordCombatCharacter::SwitchAnimationInstance(){
 	//TODO switch animation depends on weapon animation or interactstate animations etc.
 }
 
-void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass){
-
+void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {
+	FName fnWeaponSocket = TEXT("TwinBladeSheath");
+	auto Weapon = GetWorld()->SpawnActor<ACharacterWeaponActor>(WeaponClass);
+	
+	//Weapon->AttachRootComponentToActor(this, fnWeaponSocket, EAttachLocation::SnapToTarget, true);	
+	//Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,fnWeaponSocket);
 }
+
 

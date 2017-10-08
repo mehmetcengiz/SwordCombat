@@ -6,7 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "Inventory.generated.h"
 
-class UCharacterWeapon;
+class ACharacterWeaponActor;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 
@@ -21,17 +21,16 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY()
-	UCharacterWeapon* PrimaryWeapon = nullptr;
+	ACharacterWeaponActor* PrimaryWeapon = nullptr;
 
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable,Category="Inventory")
-	void SetPrimaryWeapon(UCharacterWeapon* WeaponToSet);
+	void SetPrimaryWeapon(ACharacterWeaponActor* WeaponToSet);
 
-	UCharacterWeapon* GetPrimaryWeapon() const { return PrimaryWeapon; };
+	ACharacterWeaponActor* GetPrimaryWeapon() const { return PrimaryWeapon; };
 
 	
 };

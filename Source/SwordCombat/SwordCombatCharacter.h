@@ -8,7 +8,7 @@
 #include "SwordCombatCharacter.generated.h"
 
 class UCharacterState;
-class UCharacterWeapon;
+class ACharacterWeaponActor;
 class UInventory;
 
 UCLASS(config=Game)
@@ -81,13 +81,14 @@ protected:
 	UInventory* CharacterInventory = nullptr;
 
 public:
-	UCharacterWeapon* GetPrimaryWeapon() const;
+	ACharacterWeaponActor* GetPrimaryWeapon() const;
 	
 	UFUNCTION(BlueprintCallable,Category="Animations")
 	void SwitchAnimationInstance();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	void EquipWeapon(UClass* WeaponClass);
+	void EquipWeapon(UClass* WeaponClass);	
+	
 
 };
 

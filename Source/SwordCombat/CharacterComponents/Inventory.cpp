@@ -29,6 +29,6 @@ void UInventory::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	// ...
 }
 
-void UInventory::SetPrimaryWeapon(UCharacterWeapon* WeaponToSet){
+void UInventory::SetPrimaryWeapon(ACharacterWeaponActor* WeaponToSet){
 	PrimaryWeapon = WeaponToSet;
 }
