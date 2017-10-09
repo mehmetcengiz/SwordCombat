@@ -6,7 +6,6 @@
 #include "Components/ActorComponent.h"
 #include "CharacterState.generated.h"
 
-class UCharacterWeapon;
 class UAnimBlueprint;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
