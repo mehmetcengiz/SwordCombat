@@ -4,9 +4,7 @@
 
 void UInteractState::OnRightButtonPressed() {
 	Super::OnRightButtonPressed();
-
 	UE_LOG(LogTemp, Warning, TEXT("InteractState> OnRightButtonPressed."));
-	
 }
 
 

@@ -100,14 +100,16 @@ void ASwordCombatCharacter::OnRightButtonPressed(){
 
 void ASwordCombatCharacter::SwitchCharacterState(ECharacterState CharacterStateEnum){
 
-	if(CharacterStateEnum == ECharacterState::COMBAT){
+	if(CharacterStateEnum == ECharacterState::COMBAT && CurrentCharacterState !=ECharacterState::COMBAT){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Combat state"));
+		CurrentCharacterState = ECharacterState::COMBAT;
 		if(CharacterState)
 			CharacterState->DestroyComponent(false);
 		CharacterState = ConstructObject<UCombatState>(UCombatState::StaticClass(), this, TEXT("Combat State"));
 
-	}else if(CharacterStateEnum == ECharacterState::INTERACT){
+	}else if(CharacterStateEnum == ECharacterState::INTERACT && CurrentCharacterState != ECharacterState::INTERACT){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Interact state"));
+		CurrentCharacterState = ECharacterState::INTERACT;
 		if (CharacterState)
 			CharacterState->DestroyComponent(false);
 		CharacterState = ConstructObject<UInteractState>(UInteractState::StaticClass(), this, TEXT("Interact State"));
@@ -174,6 +176,5 @@ void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {
 		CharacterInventory->SetPrimaryWeapon(Weapon);
 	}
 }
-
 
 

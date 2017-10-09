@@ -88,7 +88,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void EquipWeapon(UClass* WeaponClass);	
-	
 
+private:
+	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;
 };
 

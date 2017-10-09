@@ -3,11 +3,7 @@
 #include "CombatState.h"
 #include "SwordCombatCharacter.h"
 #include "./Weapons/CharacterWeaponActor.h"
-
-void UCombatState::EquipWeapon() {
-	CharacterWeapon = static_cast<ASwordCombatCharacter*>(GetOwner())->GetPrimaryWeapon();
-}
-
+#include "./Components/SkeletalMeshComponent.h"
 
 void UCombatState::OnRightButtonPressed(){
 	Super::OnRightButtonPressed();
@@ -15,11 +11,21 @@ void UCombatState::OnRightButtonPressed(){
 	UE_LOG(LogTemp, Warning, TEXT("Combat State> OnRightButtonPressed."));
 
 	if (CharacterWeapon == NULL){
-		EquipWeapon();
 		UE_LOG(LogTemp, Error, TEXT("Combat State> Character Weapon is null."));
+		DrawPrimaryWeapon();
 		return;
 	}
 
 	CharacterWeapon->OnPrimaryAttack();
+}
 
+void UCombatState::DrawPrimaryWeapon() {
+	
+	auto Character = static_cast<ASwordCombatCharacter*>(GetOwner());
+	CharacterWeapon = Character->GetPrimaryWeapon();
+	if (CharacterWeapon == NULL) { return; }
+	auto CharacterMesh = Character->GetMesh();
+
+	FName fnWeaponSocket = TEXT("ik_hand_gun");
+	CharacterWeapon->AttachToComponent(CharacterMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, fnWeaponSocket);
 }

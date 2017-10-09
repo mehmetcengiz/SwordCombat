@@ -17,23 +17,14 @@ UCharacterState::UCharacterState(){
 // Called when the game starts
 void UCharacterState::BeginPlay(){
 	Super::BeginPlay();
-	
-	
-
 }
-
-
-
 // Called every frame
 void UCharacterState::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction){
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	
 }
 
 void UCharacterState::OnRightButtonPressed(){
 	UE_LOG(LogTemp, Warning, TEXT("CharacterState.cpp > OnRightButtonPressed called."));
-
 }
 
 
