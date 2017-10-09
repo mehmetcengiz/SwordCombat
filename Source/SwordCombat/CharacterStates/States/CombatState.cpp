@@ -2,7 +2,7 @@
 
 #include "CombatState.h"
 #include "SwordCombatCharacter.h"
-#include "./Weapons/CharacterWeaponActor.h"
+#include "./Weapons/CharacterWeapon.h"
 #include "./Components/SkeletalMeshComponent.h"
 
 void UCombatState::OnRightButtonPressed(){

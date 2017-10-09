@@ -12,7 +12,7 @@
 #include "./CharacterStates/States/CombatState.h"
 #include "./CharacterStates/States/InteractState.h"
 #include "./CharacterComponents/Inventory.h"
-#include "./Weapons/CharacterWeaponActor.h"
+#include "./Weapons/CharacterWeapon.h"
 #include "./Components/SkeletalMeshComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -152,7 +152,7 @@ void ASwordCombatCharacter::MoveRight(float Value){
 	}
 }
 
-ACharacterWeaponActor* ASwordCombatCharacter::GetPrimaryWeapon() const{
+ACharacterWeapon* ASwordCombatCharacter::GetPrimaryWeapon() const{
 	return CharacterInventory->GetPrimaryWeapon();
 }
 
@@ -169,7 +169,7 @@ void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {
 	const FVector spawnLocation = GetMesh()->GetSocketLocation("TwinBladeSheath");
 	const FRotator spawnRotation = GetMesh()->GetSocketRotation("TwinBladeSheath");
 	const FActorSpawnParameters spawnParams;
-	auto Weapon = GetWorld()->SpawnActor<ACharacterWeaponActor>(WeaponClass, spawnLocation, spawnRotation, spawnParams);
+	auto Weapon = GetWorld()->SpawnActor<ACharacterWeapon>(WeaponClass, spawnLocation, spawnRotation, spawnParams);
 	Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,fnWeaponSocket);
 	
 	if(CharacterInventory){

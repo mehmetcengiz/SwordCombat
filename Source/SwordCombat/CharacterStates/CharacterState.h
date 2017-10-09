@@ -6,8 +6,6 @@
 #include "Components/ActorComponent.h"
 #include "CharacterState.generated.h"
 
-class UAnimBlueprint;
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SWORDCOMBAT_API UCharacterState : public UActorComponent
 {

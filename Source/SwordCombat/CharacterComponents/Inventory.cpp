@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Inventory.h"
+#include "./Weapons/CharacterWeapon.h"
 
 
 // Sets default values for this component's properties
@@ -29,6 +30,6 @@ void UInventory::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	// ...
 }
 
-void UInventory::SetPrimaryWeapon(ACharacterWeaponActor* WeaponToSet){
+void UInventory::SetPrimaryWeapon(ACharacterWeapon* WeaponToSet){
 	PrimaryWeapon = WeaponToSet;
 }
