@@ -9,8 +9,12 @@ void ATwinBlade::BeginPlay(){
 void ATwinBlade::OnPrimaryAttack(){
 	Super::OnPrimaryAttack();
 	UE_LOG(LogTemp, Warning, TEXT("ATwinBlade >> OnPrimaryAttack"));
+	
+	if (CombatCharacter->IsReadyToAttack()){
+		float MontageTime = CombatCharacter->GetMesh()->GetAnimInstance()->Montage_Play(Attack2, 1.0f, EMontagePlayReturnType::MontageLength, 0);
+		CombatCharacter->DisableAttackingForCertainTime(MontageTime / 2);
+	}
 
-	float MontageTime = CombatCharacter->GetMesh()->GetAnimInstance()->Montage_Play(Attack2, 1.0f, EMontagePlayReturnType::MontageLength, 0);
-	static_cast<ASwordCombatCharacter*>(CombatCharacter)->DisableInputForCertainTime(MontageTime / 2);
+
 
 }

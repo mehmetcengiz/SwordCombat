@@ -89,12 +89,17 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void EquipWeapon(UClass* WeaponClass);	
 
-	void DisableInputForCertainTime(float TimeToDisable);
+	void DisableAttackingForCertainTime(float TimeToDisable);
+	void DisableAttacking();
+	void EnableAttacking();
+
+
+	bool IsReadyToAttack() { return bIsReadyToAttack; }
 
 private:
 	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;
 
-	void EnableInputWithDelay();
 
+	bool bIsReadyToAttack = true;
 };
 

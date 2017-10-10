@@ -25,11 +25,11 @@ public:
 	virtual void OnPrimaryAttack();
 
 
-	void InitializeCharacterWeapon(ACharacter* CharacterToSet);
+	void InitializeCharacterWeapon(ASwordCombatCharacter* CharacterToSet);
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Character")
-	ACharacter* CombatCharacter = nullptr;
+	ASwordCombatCharacter* CombatCharacter = nullptr;
 	
 
 };

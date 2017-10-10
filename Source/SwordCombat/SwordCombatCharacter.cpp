@@ -180,14 +180,18 @@ void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {
 	}
 }
 
-void ASwordCombatCharacter::DisableInputForCertainTime(float TimeToDisable){
-	this->DisableInput(GetController()->CastToPlayerController());
+void ASwordCombatCharacter::DisableAttackingForCertainTime(float TimeToDisable){
+	bIsReadyToAttack = false;
 	FTimerHandle Handle;
-	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::EnableInputWithDelay, TimeToDisable, false);
+	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::EnableAttacking, TimeToDisable, false);
 }
 
-void ASwordCombatCharacter::EnableInputWithDelay(){
-	this->EnableInput(GetController()->CastToPlayerController());
+void ASwordCombatCharacter::DisableAttacking(){
+	bIsReadyToAttack = false;
+}
+
+void ASwordCombatCharacter::EnableAttacking(){
+	bIsReadyToAttack = true;
 }
 
 

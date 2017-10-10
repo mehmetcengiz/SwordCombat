@@ -16,7 +16,7 @@ void ACharacterWeapon::OnPrimaryAttack(){
 	//TODO I left here. Create 2 weapon actors by using this class as base class.
 }
 
-void ACharacterWeapon::InitializeCharacterWeapon(ACharacter* CharacterToSet){
+void ACharacterWeapon::InitializeCharacterWeapon(ASwordCombatCharacter* CharacterToSet){
 	UE_LOG(LogTemp, Warning, TEXT("CharacterWeapon >> Init"));
 	CombatCharacter = CharacterToSet;
 	
