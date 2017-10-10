@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Engine/StaticMeshActor.h"
+#include "SwordCombatCharacter.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Animation/AnimInstance.h"
 #include "CharacterWeapon.generated.h"
 
 /**
@@ -17,8 +20,16 @@ class SWORDCOMBAT_API ACharacterWeapon : public AStaticMeshActor
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+	
 
 	virtual void OnPrimaryAttack();
 
+
+	void InitializeCharacterWeapon(ACharacter* CharacterToSet);
+	
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "Character")
+	ACharacter* CombatCharacter = nullptr;
+	
 
 };

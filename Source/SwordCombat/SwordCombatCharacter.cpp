@@ -14,6 +14,7 @@
 #include "./CharacterComponents/Inventory.h"
 #include "./Weapons/CharacterWeapon.h"
 #include "./Components/SkeletalMeshComponent.h"
+#include "TimerManager.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
@@ -171,10 +172,22 @@ void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {
 	const FActorSpawnParameters spawnParams;
 	auto Weapon = GetWorld()->SpawnActor<ACharacterWeapon>(WeaponClass, spawnLocation, spawnRotation, spawnParams);
 	Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,fnWeaponSocket);
-	
+	Weapon->InitializeCharacterWeapon(this);
+
+
 	if(CharacterInventory){
 		CharacterInventory->SetPrimaryWeapon(Weapon);
 	}
+}
+
+void ASwordCombatCharacter::DisableInputForCertainTime(float TimeToDisable){
+	this->DisableInput(GetController()->CastToPlayerController());
+	FTimerHandle Handle;
+	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::EnableInputWithDelay, TimeToDisable, false);
+}
+
+void ASwordCombatCharacter::EnableInputWithDelay(){
+	this->EnableInput(GetController()->CastToPlayerController());
 }
 
 

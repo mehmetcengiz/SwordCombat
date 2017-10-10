@@ -89,7 +89,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void EquipWeapon(UClass* WeaponClass);	
 
+	void DisableInputForCertainTime(float TimeToDisable);
+
 private:
 	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;
+
+	void EnableInputWithDelay();
+
 };
 
