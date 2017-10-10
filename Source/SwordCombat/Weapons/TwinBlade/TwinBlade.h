@@ -22,6 +22,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 	UAnimMontage* Attack2;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+	TArray<UAnimMontage*> PrimaryAttackCombos;
+
+
 private:
 	/**Min time for player to press attack again to execute next combo.*/
 	UPROPERTY()
@@ -36,7 +40,7 @@ private:
 	void SaveCombo();
 	void ResetCombo();
 	
-
+	int32 PrimaryAttackIndex = 0;
 
 protected:	
 	void BeginPlay() override;
