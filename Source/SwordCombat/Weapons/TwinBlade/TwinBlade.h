@@ -9,6 +9,7 @@
 
 class UAnimMontage;
 class ACharacter;
+class UBoxComponent;
 /**
  * 
  */
@@ -19,11 +20,15 @@ class SWORDCOMBAT_API ATwinBlade : public ACharacterWeapon
 
 protected:
 	
+	void BeginPlay() override;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 	UAnimMontage* Attack2;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 	TArray<UAnimMontage*> PrimaryAttackCombos;
+
+	//UBoxComponent* BoxComponent = nullptr;
 
 
 private:
@@ -42,8 +47,11 @@ private:
 	
 	int32 PrimaryAttackIndex = 0;
 
+	UFUNCTION(BlueprintCallable,Category= "SwordHit")
+	void OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 protected:	
-	void BeginPlay() override;
 	void OnPrimaryAttack() override;
 
 	
