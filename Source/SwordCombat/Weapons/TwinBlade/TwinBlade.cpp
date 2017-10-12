@@ -8,7 +8,6 @@
 
 void ATwinBlade::BeginPlay(){
 	Super::BeginPlay();
-	GEngine->AddOnScreenDebugMessage(-1, 555.f, FColor::Green, "Begin play works.");
 	//BoxComponent = FindComponentByClass<UBoxComponent>();
 	//BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &ATwinBlade::OnSwordHit);
 	
@@ -20,10 +19,10 @@ void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 
 	
 
-	//TODO Select enemies by using name tag.
-	if(OtherActor->ActorHasTag(FName("Enemy"))){
+	//If actor has tag and actor has not hited before.
+	if(OtherActor->ActorHasTag(FName("Enemy")) && !HitActors.Contains(OtherActor->GetOwner())){
+		HitActors.Add(OtherActor->GetOwner());
 		GEngine->AddOnScreenDebugMessage(-1, 555.f, FColor::Green, OtherActor->GetName());	
-			
 	}
 
 }
@@ -53,6 +52,8 @@ void ATwinBlade::OnPrimaryAttack(){
 		FTimerHandle Handle2;
 		GetWorld()->GetTimerManager().SetTimer(OUT Handle2, this, &ATwinBlade::ResetCombo, NextComboMaxTime, false);
 
+		//Clear the hit actor array.
+		HitActors.Empty();
 	}
 }
 

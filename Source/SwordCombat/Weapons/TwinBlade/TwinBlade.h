@@ -29,7 +29,7 @@ protected:
 	TArray<UAnimMontage*> PrimaryAttackCombos;
 
 	//UBoxComponent* BoxComponent = nullptr;
-
+	TArray<AActor*> HitActors;
 
 private:
 	/**Min time for player to press attack again to execute next combo.*/
