@@ -17,8 +17,6 @@ void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
                             UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                             const FHitResult& SweepResult){
 
-	
-
 	//If actor has tag and actor has not hited before.
 	if(OtherActor->ActorHasTag(FName("Enemy")) && !HitActors.Contains(OtherActor->GetOwner())){
 		HitActors.Add(OtherActor->GetOwner());

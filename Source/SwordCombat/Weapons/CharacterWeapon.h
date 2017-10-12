@@ -21,9 +21,7 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	
-
 	virtual void OnPrimaryAttack();
-
 
 	void InitializeCharacterWeapon(ASwordCombatCharacter* CharacterToSet);
 	

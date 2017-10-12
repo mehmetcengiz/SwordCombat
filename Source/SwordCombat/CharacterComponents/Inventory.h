@@ -21,6 +21,7 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+
 	ACharacterWeapon* PrimaryWeapon = nullptr;
 
 public:
