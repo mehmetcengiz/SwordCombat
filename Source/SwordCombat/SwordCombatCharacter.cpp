@@ -194,4 +194,8 @@ void ASwordCombatCharacter::EnableAttacking(){
 	bIsReadyToAttack = true;
 }
 
-
+void ASwordCombatCharacter::TakeHit(float Damage) {
+	UE_LOG(LogTemp, Warning, TEXT("I tooked hit !!!"));
+	//TODO Play Animation. 
+	//TODO Apply damage.
+}

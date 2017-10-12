@@ -90,17 +90,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void EquipWeapon(UClass* WeaponClass);	
 
+
+
 	void DisableAttackingForCertainTime(float TimeToDisable);
 	void DisableAttacking();
 	void EnableAttacking();
-
-
 	bool IsReadyToAttack() { return bIsReadyToAttack; }
 
 private:
 	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;
-
-
 	bool bIsReadyToAttack = true;
+
+public:
+	void TakeHit(float Damage);
 };
 

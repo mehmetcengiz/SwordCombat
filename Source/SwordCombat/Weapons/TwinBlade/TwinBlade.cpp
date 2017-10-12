@@ -22,6 +22,7 @@ void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 		HitActors.Add(OtherActor->GetOwner());
 		GEngine->AddOnScreenDebugMessage(-1, 555.f, FColor::Green, OtherActor->GetName());	
 		//TODO hit to actor.
+		static_cast<ASwordCombatCharacter*>(OtherActor)->TakeHit(10);//implement damage later.
 	}
 }
 
@@ -75,7 +76,6 @@ void ATwinBlade::SaveCombo(){
 
 void ATwinBlade::ResetCombo(){
 	if (bSaveCombo){
-		GEngine->AddOnScreenDebugMessage(-1, 555.f, FColor::Red, "Combo Reseted");
 		bSaveCombo = false;
 		PrimaryAttackIndex = 0;
 		//Reset combo.
