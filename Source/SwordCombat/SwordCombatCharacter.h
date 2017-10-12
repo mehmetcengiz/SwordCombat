@@ -81,6 +81,7 @@ protected:
 	UInventory* CharacterInventory = nullptr;
 
 public:
+	UFUNCTION(BlueprintCallable,Category="Weapon")
 	ACharacterWeapon* GetPrimaryWeapon() const;
 	
 	UFUNCTION(BlueprintCallable,Category="Animations")

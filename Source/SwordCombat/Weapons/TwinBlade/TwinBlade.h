@@ -14,12 +14,12 @@ class UBoxComponent;
  * 
  */
 UCLASS()
-class SWORDCOMBAT_API ATwinBlade : public ACharacterWeapon
-{
+
+class SWORDCOMBAT_API ATwinBlade : public ACharacterWeapon {
 	GENERATED_BODY()
 
 protected:
-	
+
 	void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
@@ -28,7 +28,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 	TArray<UAnimMontage*> PrimaryAttackCombos;
 
-	//UBoxComponent* BoxComponent = nullptr;
+	UBoxComponent* BoxComponent = nullptr;
 	TArray<AActor*> HitActors;
 
 private:
@@ -41,18 +41,22 @@ private:
 
 	bool bSaveCombo = false;
 
-	void EnableSaveCombo()	{ bSaveCombo = true;	}
+	void EnableSaveCombo(){ bSaveCombo = true; }
 	void SaveCombo();
 	void ResetCombo();
-	
+
 	int32 PrimaryAttackIndex = 0;
 
 	UFUNCTION(BlueprintCallable,Category= "SwordHit")
 	void OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	                int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-protected:	
+protected:
 	void OnPrimaryAttack() override;
 
-	
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void EnableWeaponCollider() override;
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void DisableWeaponCollider() override;
+
 };

@@ -31,5 +31,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Character")
 	ASwordCombatCharacter* CombatCharacter = nullptr;
 	
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	virtual void EnableWeaponCollider();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	virtual void DisableWeaponCollider();
 
 };

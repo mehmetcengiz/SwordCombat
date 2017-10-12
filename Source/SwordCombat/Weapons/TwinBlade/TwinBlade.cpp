@@ -8,7 +8,7 @@
 
 void ATwinBlade::BeginPlay(){
 	Super::BeginPlay();
-	//BoxComponent = FindComponentByClass<UBoxComponent>();
+	BoxComponent = FindComponentByClass<UBoxComponent>();
 	//BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &ATwinBlade::OnSwordHit);
 	
 }
@@ -23,8 +23,8 @@ void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 	if(OtherActor->ActorHasTag(FName("Enemy")) && !HitActors.Contains(OtherActor->GetOwner())){
 		HitActors.Add(OtherActor->GetOwner());
 		GEngine->AddOnScreenDebugMessage(-1, 555.f, FColor::Green, OtherActor->GetName());	
+		//TODO hit to actor.
 	}
-
 }
 
 void ATwinBlade::OnPrimaryAttack(){
@@ -41,7 +41,7 @@ void ATwinBlade::OnPrimaryAttack(){
 		//Play montage and set character is ready to attacking to false. 
 		float MontageTime = CombatCharacter->GetMesh()->GetAnimInstance()->Montage_Play(PrimaryAttackCombos[PrimaryAttackIndex], 1.0f, EMontagePlayReturnType::MontageLength, 0);
 		CombatCharacter->DisableAttackingForCertainTime(MontageTime / 3);
-
+		
 		//Set min max times for combo trigger. 
 		NextComboMinTime = MontageTime / 3;
 		NextComboMaxTime = MontageTime;
@@ -57,9 +57,18 @@ void ATwinBlade::OnPrimaryAttack(){
 	}
 }
 
+void ATwinBlade::EnableWeaponCollider(){
+	if (BoxComponent == nullptr) { return; }
+	BoxComponent->SetCollisionEnabled(ECollisionEnabled::Type::QueryOnly);
+}
+
+void ATwinBlade::DisableWeaponCollider(){
+	if (BoxComponent == nullptr) { return; }
+	BoxComponent->SetCollisionEnabled(ECollisionEnabled::Type::NoCollision);
+}
+
 void ATwinBlade::SaveCombo(){
 	//TODO save combo;
-	GEngine->AddOnScreenDebugMessage(-1, 555.f, FColor::Green, "Next Combo Triggered.");
 	PrimaryAttackIndex++;
 	if (PrimaryAttackIndex >= PrimaryAttackCombos.Num()){
 		ResetCombo();

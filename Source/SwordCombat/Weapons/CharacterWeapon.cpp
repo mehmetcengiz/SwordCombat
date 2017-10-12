@@ -21,3 +21,12 @@ void ACharacterWeapon::InitializeCharacterWeapon(ASwordCombatCharacter* Characte
 	CombatCharacter = CharacterToSet;
 	
 }
+
+void ACharacterWeapon::EnableWeaponCollider(){
+	
+}
+
+void ACharacterWeapon::DisableWeaponCollider(){
+	
+}
+
