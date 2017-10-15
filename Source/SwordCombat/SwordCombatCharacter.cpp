@@ -90,8 +90,7 @@ void ASwordCombatCharacter::BeginPlay(){
 	UCharacterWeapon* CurrentWeapon = GetOwner()-> FindComponentByClass<UCharacterWeapon>();
 	CharacterInventory->SetPrimaryWeapon(CurrentWeapon);*/
 
-	GetMesh()->AnimClass = AnimInstance;
-	GetMesh()->SetAnimationMode(EAnimationMode::Type::AnimationBlueprint);
+	SetAnimationInstance(DefaultAnimation);
 }
 
 void ASwordCombatCharacter::OnRightButtonPressed(){
@@ -160,12 +159,15 @@ ACharacterWeapon* ASwordCombatCharacter::GetPrimaryWeapon() const{
 	return CharacterInventory->GetPrimaryWeapon();
 }
 
-void ASwordCombatCharacter::SwitchAnimationInstance(){
+void ASwordCombatCharacter::SetAnimationInstance(UClass* AnimInstanceToSet){
 	if (CharacterState == NULL){
 		UE_LOG(LogTemp, Warning, TEXT("Character State is NULL")); 
 		return;
 	}
 	//TODO switch animation depends on weapon animation or interactstate animations etc.
+	
+	GetMesh()->SetAnimationMode(EAnimationMode::Type::AnimationBlueprint);
+	GetMesh()->SetAnimInstanceClass(AnimInstanceToSet);
 }
 
 void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {	

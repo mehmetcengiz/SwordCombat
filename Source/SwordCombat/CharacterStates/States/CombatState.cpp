@@ -20,12 +20,16 @@ void UCombatState::OnRightButtonPressed(){
 }
 
 void UCombatState::DrawPrimaryWeapon() {
-	
+	//Get primary weapon.
 	auto Character = static_cast<ASwordCombatCharacter*>(GetOwner());
 	CharacterWeapon = Character->GetPrimaryWeapon();
+
+	//Set to a hand socket.
 	if (CharacterWeapon == NULL) { return; }
 	auto CharacterMesh = Character->GetMesh();
-
 	FName fnWeaponSocket = TEXT("ik_hand_gun");
 	CharacterWeapon->AttachToComponent(CharacterMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, fnWeaponSocket);
+
+	//TODO Set weapon animation to character.
+
 }

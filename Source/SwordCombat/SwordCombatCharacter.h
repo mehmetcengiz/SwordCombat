@@ -85,7 +85,7 @@ public:
 	ACharacterWeapon* GetPrimaryWeapon() const;
 	
 	UFUNCTION(BlueprintCallable,Category="Animations")
-	void SwitchAnimationInstance();
+	void SetAnimationInstance(UClass* AnimInstanceToSet);
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void EquipWeapon(UClass* WeaponClass);	
@@ -98,12 +98,13 @@ public:
 	bool IsReadyToAttack() { return bIsReadyToAttack; }
 	void TakeHit(float Damage);
 
+	
 private:
 	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;
 	bool bIsReadyToAttack = true;
 	
 protected:
 	UPROPERTY(EditDefaultsOnly,Category="Animations")
-	TSubclassOf<UAnimInstance> AnimInstance;
+	TSubclassOf<UAnimInstance> DefaultAnimation;
 };
 
