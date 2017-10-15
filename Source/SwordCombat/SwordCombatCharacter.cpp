@@ -89,6 +89,9 @@ void ASwordCombatCharacter::BeginPlay(){
 /*
 	UCharacterWeapon* CurrentWeapon = GetOwner()-> FindComponentByClass<UCharacterWeapon>();
 	CharacterInventory->SetPrimaryWeapon(CurrentWeapon);*/
+
+	GetMesh()->AnimClass = AnimInstance;
+	GetMesh()->SetAnimationMode(EAnimationMode::Type::AnimationBlueprint);
 }
 
 void ASwordCombatCharacter::OnRightButtonPressed(){

@@ -96,12 +96,14 @@ public:
 	void DisableAttacking();
 	void EnableAttacking();
 	bool IsReadyToAttack() { return bIsReadyToAttack; }
+	void TakeHit(float Damage);
 
 private:
 	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;
 	bool bIsReadyToAttack = true;
-
-public:
-	void TakeHit(float Damage);
+	
+protected:
+	UPROPERTY(EditDefaultsOnly,Category="Animations")
+	TSubclassOf<UAnimInstance> AnimInstance;
 };
 
