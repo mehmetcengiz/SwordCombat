@@ -89,8 +89,6 @@ void ASwordCombatCharacter::BeginPlay(){
 /*
 	UCharacterWeapon* CurrentWeapon = GetOwner()-> FindComponentByClass<UCharacterWeapon>();
 	CharacterInventory->SetPrimaryWeapon(CurrentWeapon);*/
-
-	SetAnimationInstance(DefaultAnimation);
 }
 
 void ASwordCombatCharacter::OnRightButtonPressed(){
@@ -109,6 +107,8 @@ void ASwordCombatCharacter::SwitchCharacterState(ECharacterState CharacterStateE
 		if(CharacterState)
 			CharacterState->DestroyComponent(false);
 		CharacterState = ConstructObject<UCombatState>(UCombatState::StaticClass(), this, TEXT("Combat State"));
+		CharacterState->RegisterComponent();
+		CharacterState->OnComponentCreated();
 
 	}else if(CharacterStateEnum == ECharacterState::INTERACT && CurrentCharacterState != ECharacterState::INTERACT){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Interact state"));
@@ -116,6 +116,8 @@ void ASwordCombatCharacter::SwitchCharacterState(ECharacterState CharacterStateE
 		if (CharacterState)
 			CharacterState->DestroyComponent(false);
 		CharacterState = ConstructObject<UInteractState>(UInteractState::StaticClass(), this, TEXT("Interact State"));
+		CharacterState->RegisterComponent();
+		CharacterState->OnComponentCreated();
 	}
 
 }
@@ -170,6 +172,15 @@ void ASwordCombatCharacter::SetAnimationInstance(UClass* AnimInstanceToSet){
 	GetMesh()->SetAnimInstanceClass(AnimInstanceToSet);
 }
 
+void ASwordCombatCharacter::SetAnimationInstanceToDefault(){
+	if (CharacterState == NULL) {
+		UE_LOG(LogTemp, Warning, TEXT("Character State is NULL"));
+		return;
+	}
+	GetMesh()->SetAnimationMode(EAnimationMode::Type::AnimationBlueprint);
+	GetMesh()->SetAnimInstanceClass(DefaultAnimation);
+}
+
 void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {	
 	FName fnWeaponSocket = TEXT("TwinBladeSheath");
 	const FVector spawnLocation = GetMesh()->GetSocketLocation("TwinBladeSheath");
@@ -203,4 +214,12 @@ void ASwordCombatCharacter::TakeHit(float Damage) {
 	UE_LOG(LogTemp, Warning, TEXT("I tooked hit !!!"));
 	//TODO Play Animation. 
 	//TODO Apply damage.
+}
+
+void ASwordCombatCharacter::PutSwordBackToSheath(){
+	FName fnWeaponSocket = TEXT("TwinBladeSheath");
+
+	if (CharacterInventory != NULL) {
+		CharacterInventory->GetPrimaryWeapon()->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, fnWeaponSocket);
+	}
 }

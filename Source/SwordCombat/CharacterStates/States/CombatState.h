@@ -27,5 +27,5 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Equip Weapon")
 	void DrawPrimaryWeapon();
 	
-	
+	void BeginPlay() override;
 };

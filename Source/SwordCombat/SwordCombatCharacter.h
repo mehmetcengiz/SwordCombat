@@ -47,10 +47,11 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
-protected:
-
 	UFUNCTION(BlueprintCallable, Category = "Character State")
 	void SwitchCharacterState(ECharacterState CharacterStateEnum);
+
+protected:
+
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -86,6 +87,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable,Category="Animations")
 	void SetAnimationInstance(UClass* AnimInstanceToSet);
+	
+	UFUNCTION(BlueprintCallable, Category = "Animations")
+	void SetAnimationInstanceToDefault();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void EquipWeapon(UClass* WeaponClass);	
@@ -97,14 +101,15 @@ public:
 	void EnableAttacking();
 	bool IsReadyToAttack() { return bIsReadyToAttack; }
 	void TakeHit(float Damage);
-
+	void PutSwordBackToSheath();
 	
 private:
 	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;
 	bool bIsReadyToAttack = true;
-	
+
 protected:
-	UPROPERTY(EditDefaultsOnly,Category="Animations")
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 	TSubclassOf<UAnimInstance> DefaultAnimation;
+
 };
 

@@ -34,3 +34,14 @@ void UCombatState::DrawPrimaryWeapon() {
 	Character->SetAnimationInstance(CharacterWeapon->GetWeaponAnimInstance());
 
 }
+
+void UCombatState::BeginPlay(){
+	Super::BeginPlay();
+	
+	if (CharacterWeapon == NULL) {
+		UE_LOG(LogTemp, Error, TEXT("Combat State> Character Weapon is null."));
+		DrawPrimaryWeapon();
+		return;
+	}
+
+}

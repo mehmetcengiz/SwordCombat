@@ -6,6 +6,7 @@
 #include "CharacterStates/CharacterState.h"
 #include "InteractState.generated.h"
 
+class UAnimInstance;
 /**
  * 
  */
@@ -17,6 +18,7 @@ class SWORDCOMBAT_API UInteractState : public UCharacterState
 public:
 	
 	void OnRightButtonPressed() override;
-	
+
+	void BeginPlay() override;
 
 };
