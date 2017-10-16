@@ -86,9 +86,6 @@ void ASwordCombatCharacter::BeginPlay(){
 	
 	/*Create default chracter state*/
 	SwitchCharacterState(ECharacterState::COMBAT);
-/*
-	UCharacterWeapon* CurrentWeapon = GetOwner()-> FindComponentByClass<UCharacterWeapon>();
-	CharacterInventory->SetPrimaryWeapon(CurrentWeapon);*/
 	
 	//TODO Later set animation instance depends on weapon for every enemy. 
 	if(this->ActorHasTag(FName("Player"))){
@@ -163,10 +160,6 @@ void ASwordCombatCharacter::MoveRight(float Value){
 	}
 }
 
-ACharacterWeapon* ASwordCombatCharacter::GetPrimaryWeapon() const{
-	return CharacterInventory->GetPrimaryWeapon();
-}
-
 void ASwordCombatCharacter::SetAnimationInstance(UClass* AnimInstanceToSet){
 	if (CharacterState == NULL){
 		UE_LOG(LogTemp, Warning, TEXT("Character State is NULL")); 
@@ -185,6 +178,10 @@ void ASwordCombatCharacter::SetAnimationInstanceToDefault(){
 	}
 	GetMesh()->SetAnimationMode(EAnimationMode::Type::AnimationBlueprint);
 	GetMesh()->SetAnimInstanceClass(DefaultAnimation);
+}
+
+ACharacterWeapon* ASwordCombatCharacter::GetPrimaryWeapon() const{
+	return CharacterInventory->GetPrimaryWeapon();
 }
 
 void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {	

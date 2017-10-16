@@ -82,15 +82,15 @@ protected:
 	UInventory* CharacterInventory = nullptr;
 
 public:
-	UFUNCTION(BlueprintCallable,Category="Weapon")
-	ACharacterWeapon* GetPrimaryWeapon() const;
-	
 	UFUNCTION(BlueprintCallable,Category="Animations")
 	void SetAnimationInstance(UClass* AnimInstanceToSet);
 	
 	UFUNCTION(BlueprintCallable, Category = "Animations")
 	void SetAnimationInstanceToDefault();
 
+	UFUNCTION(BlueprintCallable,Category="Weapon")
+	ACharacterWeapon* GetPrimaryWeapon() const;
+	
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void EquipWeapon(UClass* WeaponClass);	
 
