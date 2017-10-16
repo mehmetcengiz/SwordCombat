@@ -89,6 +89,12 @@ void ASwordCombatCharacter::BeginPlay(){
 /*
 	UCharacterWeapon* CurrentWeapon = GetOwner()-> FindComponentByClass<UCharacterWeapon>();
 	CharacterInventory->SetPrimaryWeapon(CurrentWeapon);*/
+	
+	//TODO Later set animation instance depends on weapon for every enemy. 
+	if(this->ActorHasTag(FName("Player"))){
+		SetAnimationInstanceToDefault();
+	}
+	
 }
 
 void ASwordCombatCharacter::OnRightButtonPressed(){
