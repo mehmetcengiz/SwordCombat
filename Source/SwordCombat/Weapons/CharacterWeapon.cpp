@@ -30,3 +30,7 @@ void ACharacterWeapon::DisableWeaponCollider(){
 	
 }
 
+UClass* ACharacterWeapon::GetWeaponAnimInstance(){
+	return WeaponAnimInstance;
+}
+

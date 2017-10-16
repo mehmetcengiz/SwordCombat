@@ -24,6 +24,7 @@ public:
 	virtual void OnPrimaryAttack();
 
 	void InitializeCharacterWeapon(ASwordCombatCharacter* CharacterToSet);
+	UClass* GetWeaponAnimInstance();
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Character")
@@ -33,5 +34,9 @@ protected:
 	virtual void EnableWeaponCollider();
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	virtual void DisableWeaponCollider();
+
+	UPROPERTY(EditDefaultsOnly,Category="Animations")
+	TSubclassOf<UAnimInstance> WeaponAnimInstance;
+
 
 };

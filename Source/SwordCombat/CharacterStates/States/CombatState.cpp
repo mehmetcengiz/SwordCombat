@@ -31,5 +31,6 @@ void UCombatState::DrawPrimaryWeapon() {
 	CharacterWeapon->AttachToComponent(CharacterMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, fnWeaponSocket);
 
 	//TODO Set weapon animation to character.
+	Character->SetAnimationInstance(CharacterWeapon->GetWeaponAnimInstance());
 
 }
