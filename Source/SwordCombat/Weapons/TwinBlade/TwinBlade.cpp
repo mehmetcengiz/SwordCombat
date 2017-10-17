@@ -18,7 +18,7 @@ void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
                             const FHitResult& SweepResult){
 
 	//If actor has tag and actor has not hited before and actor not hited himself.
-	if(OtherActor->ActorHasTag(FName("Enemy")) && !HitActors.Contains(OtherActor->GetOwner())){ //&& OtherActor->GetOwner() != this->GetOwner()){
+	if(OtherActor->ActorHasTag(FName("Enemy")) && !HitActors.Contains(OtherActor->GetOwner()) && OtherActor->GetOwner() != CombatCharacter){
 		HitActors.Add(OtherActor->GetOwner());
 		GEngine->AddOnScreenDebugMessage(-1, 555.f, FColor::Green, OtherActor->GetName());	
 		//TODO hit to actor.

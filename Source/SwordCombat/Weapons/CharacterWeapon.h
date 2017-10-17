@@ -26,6 +26,8 @@ public:
 	void InitializeCharacterWeapon(ASwordCombatCharacter* CharacterToSet);
 	UClass* GetWeaponAnimInstance();
 	
+	
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Character")
 	ASwordCombatCharacter* CombatCharacter = nullptr;
