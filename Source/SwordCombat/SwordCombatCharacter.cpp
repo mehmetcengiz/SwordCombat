@@ -213,12 +213,6 @@ void ASwordCombatCharacter::EnableAttacking(){
 	bIsReadyToAttack = true;
 }
 
-void ASwordCombatCharacter::TakeHit(float Damage) {
-	UE_LOG(LogTemp, Warning, TEXT("I tooked hit !!!"));
-	//TODO Play Animation. 
-	//TODO Apply damage.
-}
-
 void ASwordCombatCharacter::PutSwordBackToSheath(){
 	FName fnWeaponSocket = TEXT("TwinBladeSheath");
 
@@ -226,3 +220,20 @@ void ASwordCombatCharacter::PutSwordBackToSheath(){
 		CharacterInventory->GetPrimaryWeapon()->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, fnWeaponSocket);
 	}
 }
+
+void ASwordCombatCharacter::TakeHit(float Damage) {
+	UE_LOG(LogTemp, Warning, TEXT("I tooked hit !!!"));
+	//TODO Play Animation. 
+	bGotHit = true;
+	bIsReadyToAttack = false;
+	FTimerHandle Handle;
+	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::ResetCharacter, HitClipTime, false);
+	//TODO Apply damage.
+}
+
+
+void ASwordCombatCharacter::ResetCharacter() {
+	bGotHit = false;
+	bIsReadyToAttack = true;
+}
+

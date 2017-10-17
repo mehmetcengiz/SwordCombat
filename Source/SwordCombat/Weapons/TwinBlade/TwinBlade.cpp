@@ -17,12 +17,12 @@ void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
                             UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                             const FHitResult& SweepResult){
 
-	//If actor has tag and actor has not hited before.
-	if(OtherActor->ActorHasTag(FName("Enemy")) && !HitActors.Contains(OtherActor->GetOwner())){
+	//If actor has tag and actor has not hited before and actor not hited himself.
+	if(OtherActor->ActorHasTag(FName("Enemy")) && !HitActors.Contains(OtherActor->GetOwner())){ //&& OtherActor->GetOwner() != this->GetOwner()){
 		HitActors.Add(OtherActor->GetOwner());
 		GEngine->AddOnScreenDebugMessage(-1, 555.f, FColor::Green, OtherActor->GetName());	
 		//TODO hit to actor.
-		static_cast<ASwordCombatCharacter*>(OtherActor)->TakeHit(10);//implement damage later.
+		static_cast<ASwordCombatCharacter*>(OtherActor)->TakeHit(10);//TODO	implement damage later.
 	}
 }
 
