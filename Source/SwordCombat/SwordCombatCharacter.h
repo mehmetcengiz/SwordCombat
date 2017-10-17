@@ -102,11 +102,11 @@ public:
 	bool IsReadyToAttack() { return bIsReadyToAttack; }
 	void TakeHit(float Damage);
 	void PutSwordBackToSheath();
-	void DisableFromAttackingForCertainTime(float TimeToDisable);
 	void ResetCharacter();
 
 	UPROPERTY(BlueprintReadWrite,Category="Animations")
 	bool bGotHit = false;
+	float HitClipTime = 1.16f;
 
 private:
 	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;

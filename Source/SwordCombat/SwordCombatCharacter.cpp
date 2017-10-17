@@ -221,21 +221,16 @@ void ASwordCombatCharacter::PutSwordBackToSheath(){
 	}
 }
 
-
 void ASwordCombatCharacter::TakeHit(float Damage) {
 	UE_LOG(LogTemp, Warning, TEXT("I tooked hit !!!"));
 	//TODO Play Animation. 
-
 	bGotHit = true;
-	DisableFromAttackingForCertainTime(1);
+	bIsReadyToAttack = false;
+	FTimerHandle Handle;
+	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::ResetCharacter, HitClipTime, false);
 	//TODO Apply damage.
 }
 
-void ASwordCombatCharacter::DisableFromAttackingForCertainTime(float TimeToDisable) {
-	bIsReadyToAttack = false;
-	FTimerHandle Handle;
-	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::ResetCharacter, TimeToDisable, false);
-}
 
 void ASwordCombatCharacter::ResetCharacter() {
 	bGotHit = false;
