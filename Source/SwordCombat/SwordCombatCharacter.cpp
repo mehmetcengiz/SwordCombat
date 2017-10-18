@@ -27,6 +27,7 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
 
+
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
@@ -53,7 +54,9 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
 	CharacterInventory = CreateDefaultSubobject<UInventory>(TEXT("Character Inventory"));
-
+	
+	//Tick enabled
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -91,6 +94,12 @@ void ASwordCombatCharacter::BeginPlay(){
 	if(this->ActorHasTag(FName("Player"))){
 		SetAnimationInstanceToDefault();
 	}
+	
+	CurrentHealth = MaxHealth;
+
+}
+
+void ASwordCombatCharacter::Tick(float DeltaTime){
 	
 }
 
@@ -227,13 +236,24 @@ void ASwordCombatCharacter::TakeHit(float Damage) {
 	bGotHit = true;
 	bIsReadyToAttack = false;
 	FTimerHandle Handle;
-	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::ResetCharacter, HitClipTime, false);
+	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::ResetCharacter, DisableAttackingOnHitTime, false);
 	//TODO Apply damage.
+	CurrentHealth -= Damage; 
+	if (CurrentHealth <= 0) {
+		PlayDeath();
+	}
 }
-
 
 void ASwordCombatCharacter::ResetCharacter() {
 	bGotHit = false;
 	bIsReadyToAttack = true;
 }
+
+void ASwordCombatCharacter::PlayDeath(){
+	bIsDeath = true;
+	DisableInput(GetController()->CastToPlayerController());
+	SetActorEnableCollision(false);
+}
+
+
 

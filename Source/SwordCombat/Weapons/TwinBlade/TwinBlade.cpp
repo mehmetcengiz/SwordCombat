@@ -22,7 +22,7 @@ void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 		HitActors.Add(OtherActor->GetOwner());
 		GEngine->AddOnScreenDebugMessage(-1, 555.f, FColor::Green, OtherActor->GetName());	
 		//TODO hit to actor.
-		static_cast<ASwordCombatCharacter*>(OtherActor)->TakeHit(10);//TODO	implement damage later.
+		static_cast<ASwordCombatCharacter*>(OtherActor)->TakeHit(40);//TODO	implement damage later.
 	}
 }
 

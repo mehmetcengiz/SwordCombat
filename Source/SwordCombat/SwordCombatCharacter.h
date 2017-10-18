@@ -55,6 +55,7 @@ protected:
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
@@ -103,16 +104,27 @@ public:
 	void TakeHit(float Damage);
 	void PutSwordBackToSheath();
 	void ResetCharacter();
+	void PlayDeath();
 
 	UPROPERTY(BlueprintReadWrite,Category="Animations")
 	bool bGotHit = false;
-	float HitClipTime = 1.16f;
+	UPROPERTY(BlueprintReadWrite,Category="Animations")
+	bool bIsDeath = false;
+
+	float DisableAttackingOnHitTime = 0.2f;
+
 
 private:
 	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;
 	bool bIsReadyToAttack = true;
 
 protected:
+	UPROPERTY(EditDefaultsOnly,Category="Character Stats")
+	float MaxHealth = 100;
+
+	UPROPERTY(BlueprintReadWrite,Category="Character Stats")
+	float CurrentHealth = 0;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 	TSubclassOf<UAnimInstance> DefaultAnimation;
 
