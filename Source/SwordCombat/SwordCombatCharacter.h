@@ -104,7 +104,6 @@ public:
 	void TakeHit(float Damage);
 	void PutSwordBackToSheath();
 	void ResetCharacter();
-	void PlayDeath();
 
 	UPROPERTY(BlueprintReadWrite,Category="Animations")
 	bool bGotHit = false;
@@ -117,6 +116,11 @@ public:
 private:
 	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;
 	bool bIsReadyToAttack = true;
+	
+private:
+	void PlayDeath();
+	void DisableFromWorld();
+
 
 protected:
 	UPROPERTY(EditDefaultsOnly,Category="Character Stats")

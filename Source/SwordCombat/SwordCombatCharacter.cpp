@@ -252,6 +252,11 @@ void ASwordCombatCharacter::ResetCharacter() {
 void ASwordCombatCharacter::PlayDeath(){
 	bIsDeath = true;
 	DisableInput(GetController()->CastToPlayerController());
+	FTimerHandle Handle;
+	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::DisableFromWorld, 2, false);
+}
+
+void ASwordCombatCharacter::DisableFromWorld(){
 	SetActorEnableCollision(false);
 }
 
