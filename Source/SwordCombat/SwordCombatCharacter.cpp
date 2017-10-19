@@ -230,12 +230,13 @@ void ASwordCombatCharacter::PutSwordBackToSheath(){
 	}
 }
 
-void ASwordCombatCharacter::TakeHit(float Damage) {
+void ASwordCombatCharacter::TakeHit(float Damage, float DamageLocation) {
 	UE_LOG(LogTemp, Warning, TEXT("I tooked hit !!!"));
 	//TODO Play Animation. 
 	bGotHit = true;
 	bIsReadyToAttack = false;
 	FTimerHandle Handle;
+	LastDamageLocation = DamageLocation;
 	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::ResetCharacter, DisableAttackingOnHitTime, false);
 	//TODO Apply damage.
 	CurrentHealth -= Damage; 

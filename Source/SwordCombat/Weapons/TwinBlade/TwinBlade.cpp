@@ -4,6 +4,7 @@
 #include "TimerManager.h"
 #include "Engine/Engine.h" // For debug delete later.
 #include "Components/BoxComponent.h"
+#include <string>
 
 
 void ATwinBlade::BeginPlay(){
@@ -20,10 +21,27 @@ void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 	//If actor has tag and actor has not hited before and actor not hited himself.
 	if(OtherActor->ActorHasTag(FName("Enemy")) && !HitActors.Contains(OtherActor->GetOwner()) && OtherActor->GetOwner() != CombatCharacter){
 		HitActors.Add(OtherActor->GetOwner());
-		GEngine->AddOnScreenDebugMessage(-1, 555.f, FColor::Green, OtherActor->GetName());	
 		//TODO hit to actor.
-		static_cast<ASwordCombatCharacter*>(OtherActor)->TakeHit(40);//TODO	implement damage later.
+		//TODO Get hit location.
+		
+		float Angle = GetHitAngle(OtherActor);
+	
+		static_cast<ASwordCombatCharacter*>(OtherActor)->TakeHit(1, Angle);//TODO implement damage later.
 	}
+}
+
+float ATwinBlade::GetHitAngle(AActor* OtherActor){
+
+	auto OtherActForwardVector = OtherActor->GetActorForwardVector();
+	auto CombatActForward = CombatCharacter->GetActorForwardVector();
+
+	auto OtherActRotator = FRotationMatrix::MakeFromX(OtherActForwardVector).Rotator();
+	auto CombatActRotator = FRotationMatrix::MakeFromX(CombatActForward).Rotator();
+
+	auto DeltaRotator = OtherActRotator - CombatActRotator;
+	DeltaRotator.Normalize();
+
+	return DeltaRotator.Yaw;
 }
 
 void ATwinBlade::OnPrimaryAttack(){

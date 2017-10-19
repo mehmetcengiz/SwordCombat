@@ -101,7 +101,7 @@ public:
 	void DisableAttacking();
 	void EnableAttacking();
 	bool IsReadyToAttack() { return bIsReadyToAttack; }
-	void TakeHit(float Damage);
+	void TakeHit(float Damage, float DamageLocation);
 	void PutSwordBackToSheath();
 	void ResetCharacter();
 
@@ -109,6 +109,8 @@ public:
 	bool bGotHit = false;
 	UPROPERTY(BlueprintReadWrite,Category="Animations")
 	bool bIsDeath = false;
+	UPROPERTY(BlueprintReadWrite,Category="Animations")
+	float LastDamageLocation = 0;
 
 	float DisableAttackingOnHitTime = 0.2f;
 
