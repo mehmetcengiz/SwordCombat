@@ -30,19 +30,6 @@ void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 	}
 }
 
-float ATwinBlade::GetHitAngle(AActor* OtherActor){
-
-	auto OtherActForwardVector = OtherActor->GetActorForwardVector();
-	auto CombatActForward = CombatCharacter->GetActorForwardVector();
-
-	auto OtherActRotator = FRotationMatrix::MakeFromX(OtherActForwardVector).Rotator();
-	auto CombatActRotator = FRotationMatrix::MakeFromX(CombatActForward).Rotator();
-
-	auto DeltaRotator = OtherActRotator - CombatActRotator;
-	DeltaRotator.Normalize();
-
-	return DeltaRotator.Yaw;
-}
 
 void ATwinBlade::OnPrimaryAttack(){
 	Super::OnPrimaryAttack();
@@ -98,4 +85,18 @@ void ATwinBlade::ResetCombo(){
 		PrimaryAttackIndex = 0;
 		//Reset combo.
 	}
+}
+
+float ATwinBlade::GetHitAngle(AActor* OtherActor){
+
+	auto OtherActForwardVector = OtherActor->GetActorForwardVector();
+	auto CombatActForward = CombatCharacter->GetActorForwardVector();
+
+	auto OtherActRotator = FRotationMatrix::MakeFromX(OtherActForwardVector).Rotator();
+	auto CombatActRotator = FRotationMatrix::MakeFromX(CombatActForward).Rotator();
+
+	auto DeltaRotator = OtherActRotator - CombatActRotator;
+	DeltaRotator.Normalize();
+
+	return DeltaRotator.Yaw;
 }
