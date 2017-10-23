@@ -2,6 +2,7 @@
 
 #include "Inventory.h"
 #include "./Weapons/CharacterWeapon.h"
+#include "Engine/Texture2D.h"
 
 
 // Sets default values for this component's properties
@@ -32,4 +33,18 @@ void UInventory::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 
 void UInventory::SetPrimaryWeapon(ACharacterWeapon* WeaponToSet){
 	PrimaryWeapon = WeaponToSet;
+}
+
+void UInventory::AddInventoryItem(FString Name,UTexture2D* Image){
+	FInventoryItem Item;
+	Item.SetImage(Image);
+	Item.SetName(Name);
+	InventoryItems.Add(Item);
+}
+
+void UInventory::LogInventoryItems(){
+	if (InventoryItems.Num() == 0) { return; }
+	for (FInventoryItem item : InventoryItems){
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *item.GetName());
+	}
 }

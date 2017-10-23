@@ -7,6 +7,35 @@
 #include "Inventory.generated.h"
 
 class ACharacterWeapon;
+class UTexture2D;
+
+
+USTRUCT(BlueprintType)
+struct FInventoryItem{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadOnly)
+	FString Name;
+
+	UPROPERTY(BlueprintReadOnly)
+	UTexture2D* Image;
+
+
+	FString GetName() const{ return Name; }
+	UTexture2D* GetTexture2D() const{ return Image; }
+	void SetName(FString NameToSet) { Name = NameToSet; }
+	void SetImage(UTexture2D* ImageToSet) { Image = ImageToSet; }
+
+
+	FInventoryItem(){
+		
+	}	
+	FInventoryItem(FString NameToSet,UTexture2D* ImageToSet){
+		Name = NameToSet;
+		Image = ImageToSet;
+	}
+
+};
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 
@@ -33,5 +62,13 @@ public:
 
 	ACharacterWeapon* GetPrimaryWeapon() const { return PrimaryWeapon; };
 
+	UPROPERTY()
+	TArray<FInventoryItem> InventoryItems;
+
+	UFUNCTION(BlueprintCallable,Category="Debug")
+	void AddInventoryItem(FString Name, UTexture2D* Image);
+	
+	UFUNCTION(BlueprintCallable, Category = "Debug")
+	void LogInventoryItems();
 	
 };
