@@ -26,7 +26,7 @@ void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 		
 		float Angle = GetHitAngle(OtherActor);
 	
-		static_cast<ASwordCombatCharacter*>(OtherActor)->TakeHit(1, Angle);//TODO implement damage later.
+		static_cast<ASwordCombatCharacter*>(OtherActor)->TakeHit(30, Angle);//TODO implement damage later.
 	}
 }
 

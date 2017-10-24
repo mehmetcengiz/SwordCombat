@@ -7,6 +7,7 @@
 #include "./WorldProps/CharacterStateTrigger.h"
 #include "SwordCombatCharacter.generated.h"
 
+
 class UCharacterState;
 class ACharacterWeapon;
 class UInventory;

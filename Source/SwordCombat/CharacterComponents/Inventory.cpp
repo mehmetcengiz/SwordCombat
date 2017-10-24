@@ -19,7 +19,7 @@ UInventory::UInventory(){
 void UInventory::BeginPlay(){
 	Super::BeginPlay();
 
-	// ...
+	UpdateInventory();
 
 }
 
@@ -33,5 +33,9 @@ void UInventory::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 
 void UInventory::SetPrimaryWeapon(ACharacterWeapon* WeaponToSet){
 	PrimaryWeapon = WeaponToSet;
+}
+
+void UInventory::UpdateInventory(){
+	OnUpdateInventory.Broadcast(InventoryItems);
 }
 

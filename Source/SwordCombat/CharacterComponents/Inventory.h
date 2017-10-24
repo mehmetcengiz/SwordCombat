@@ -6,27 +6,27 @@
 #include "Components/ActorComponent.h"
 #include "Inventory.generated.h"
 
+
 class ACharacterWeapon;
 class UTexture2D;
-
 
 USTRUCT(BlueprintType)
 struct FInventoryItem{
 	GENERATED_BODY()
 
-	UPROPERTY(EditDefaultsOnly, Category = "Item")
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Item")
 	TSubclassOf<AActor> ItemClass;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	FString Name;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite,Category = "Item")
 	int32 Quantity;	
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	int32 ItemSlot;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	UTexture2D* Image;
 
 
@@ -41,6 +41,8 @@ struct FInventoryItem{
 	}	
 
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FUpdateInventoryDelegate, const TArray<FInventoryItem>&, InventoryItems);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 
@@ -71,4 +73,12 @@ public:
 	TArray<FInventoryItem> InventoryItems;
 	
 	TArray<FInventoryItem> GetInventoryItems() const { return InventoryItems; }
+
+	UFUNCTION(BlueprintCallable,Category="Inventory")
+	void UpdateInventory();
+
+	UPROPERTY(BlueprintAssignable, Category = "Inventory")
+	FUpdateInventoryDelegate OnUpdateInventory;
+
+
 };
