@@ -14,10 +14,19 @@ USTRUCT(BlueprintType)
 struct FInventoryItem{
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Item")
+	TSubclassOf<AActor> ItemClass;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Item")
 	FString Name;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Item")
+	int32 Quantity;	
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Item")
+	int32 ItemSlot;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Item")
 	UTexture2D* Image;
 
 
@@ -30,10 +39,6 @@ struct FInventoryItem{
 	FInventoryItem(){
 		
 	}	
-	FInventoryItem(FString NameToSet,UTexture2D* ImageToSet){
-		Name = NameToSet;
-		Image = ImageToSet;
-	}
 
 };
 
@@ -60,15 +65,10 @@ public:
 	UFUNCTION(BlueprintCallable,Category="Inventory")
 	void SetPrimaryWeapon(ACharacterWeapon* WeaponToSet);
 
-	ACharacterWeapon* GetPrimaryWeapon() const { return PrimaryWeapon; };
+	ACharacterWeapon* GetPrimaryWeapon() const { return PrimaryWeapon; }
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere,Category="Inventory")
 	TArray<FInventoryItem> InventoryItems;
-
-	UFUNCTION(BlueprintCallable,Category="Debug")
-	void AddInventoryItem(FString Name, UTexture2D* Image);
 	
-	UFUNCTION(BlueprintCallable, Category = "Debug")
-	void LogInventoryItems();
-	
+	TArray<FInventoryItem> GetInventoryItems() const { return InventoryItems; }
 };
