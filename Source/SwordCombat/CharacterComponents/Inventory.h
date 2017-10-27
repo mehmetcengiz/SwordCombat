@@ -33,9 +33,6 @@ struct FInventoryItem{
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite,Category = "Item")
 	int32 Quantity;	
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
-	int32 ItemSlot;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	UTexture2D* Image;
@@ -83,6 +80,10 @@ public:
 	UPROPERTY(EditAnywhere,Category="Inventory")
 	TArray<FInventoryItem> InventoryItems;
 	
+	UFUNCTION(BlueprintCallable,Category="Inventory")
+	int32 GetInventorySize() const{ return InventorySize; }
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	TArray<FInventoryItem> GetInventoryItems() const { return InventoryItems; }
 
 	UFUNCTION(BlueprintCallable,Category="Inventory")
@@ -91,5 +92,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Inventory")
 	FUpdateInventoryDelegate OnUpdateInventory;
 
+private:
+
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	int32 InventorySize = 20;
 
 };
