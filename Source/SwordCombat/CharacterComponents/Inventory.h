@@ -10,12 +10,23 @@
 class ACharacterWeapon;
 class UTexture2D;
 
+UENUM()
+enum class EItemType : uint16{
+	NONE,
+	WEAPON,
+	HELMET,
+	POTION,
+};
+
 USTRUCT(BlueprintType)
 struct FInventoryItem{
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Item")
 	TSubclassOf<AActor> ItemClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
+	TEnumAsByte<EItemType> ItemType;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	FString Name;
