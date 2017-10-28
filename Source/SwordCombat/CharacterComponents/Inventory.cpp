@@ -39,3 +39,10 @@ void UInventory::UpdateInventory(){
 	OnUpdateInventory.Broadcast(InventoryItems);
 }
 
+void UInventory::AddItem(FInventoryItem Item){
+	if(InventoryItems.Num() < InventorySize){
+		InventoryItems.Add(Item);
+	}
+	UpdateInventory();
+}
+

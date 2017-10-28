@@ -92,9 +92,16 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Inventory")
 	FUpdateInventoryDelegate OnUpdateInventory;
 
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory Management")
+	void AddItem(FInventoryItem Item);
+
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Inventory")
 	int32 InventorySize = 20;
+
+
+
 
 };
