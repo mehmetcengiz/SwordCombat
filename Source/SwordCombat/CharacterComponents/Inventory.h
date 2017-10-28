@@ -10,12 +10,12 @@
 class ACharacterWeapon;
 class UTexture2D;
 
-UENUM()
-enum class EItemType : uint16{
-	NONE,
-	WEAPON,
-	HELMET,
-	POTION,
+UENUM(BlueprintType)
+enum class EItemType : uint8{
+	NONE	UMETA(DisplayName = "None"),
+	WEAPON	UMETA(DisplayName = "Weapon"),
+	HELMET	UMETA(DisplayName = "Helmet"),
+	POTION	UMETA(DisplayName = "Potion"),
 };
 
 USTRUCT(BlueprintType)
