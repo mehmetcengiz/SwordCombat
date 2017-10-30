@@ -46,3 +46,7 @@ void UInventory::AddItem(FInventoryItem Item){
 	UpdateInventory();
 }
 
+void UInventory::UseItem(FInventoryItem Item){
+	
+}
+

@@ -32,7 +32,10 @@ struct FInventoryItem{
 	FString Name;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite,Category = "Item")
-	int32 Quantity;	
+	int32 Quantity;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
+	int32 Slot;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	UTexture2D* Image;
@@ -92,16 +95,20 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Inventory")
 	FUpdateInventoryDelegate OnUpdateInventory;
 
-
 	UFUNCTION(BlueprintCallable, Category = "Inventory Management")
 	void AddItem(FInventoryItem Item);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory Management")
+	void UseItem(FInventoryItem Item);
+
+
+	//UFUNCTION(BlueprintCallable, Category = "Inventory")
+	//void 
 
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Inventory")
 	int32 InventorySize = 20;
 
-
-
-
+	
 };
