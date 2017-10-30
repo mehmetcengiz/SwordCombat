@@ -97,14 +97,6 @@ void ASwordCombatCharacter::BeginPlay(){
 	
 	CurrentHealth = MaxHealth;
 
-
-	APlayerController* playerController = Cast<APlayerController>(GetController());
-	if(playerController){
-		playerController->bShowMouseCursor = true;
-		playerController->bEnableClickEvents = true;
-		playerController->bEnableMouseOverEvents = true;
-	}
-
 }
 
 void ASwordCombatCharacter::Tick(float DeltaTime){
