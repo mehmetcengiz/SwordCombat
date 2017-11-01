@@ -48,7 +48,25 @@ void UInventory::AddItem(FInventoryItem Item){
 	UpdateInventory();
 }
 
-void UInventory::UseItem(FInventoryItem Item){ }
+void UInventory::UseItem(FInventoryItem Item){
+
+	switch (Item.ItemType){
+	case EItemType::NONE:
+		UE_LOG(LogTemp, Warning, TEXT("Item Type None"));
+		break;
+	case EItemType::WEAPON:
+		UE_LOG(LogTemp, Warning, TEXT("Item Type WEAPON"));
+		break;
+	case EItemType::HELMET:
+		UE_LOG(LogTemp, Warning, TEXT("Item Type HELMET"));
+		break;
+	case EItemType::POTION:
+		UE_LOG(LogTemp, Warning, TEXT("Item Type POTION"));
+		break;
+	default: ;
+	}
+
+}
 
 void UInventory::DeleteItem(int32 Slot){
 	if (Slot < InventoryItems.Num()){
