@@ -54,6 +54,7 @@ struct FInventoryItem{
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FUpdateInventoryDelegate, const TArray<FInventoryItem>&, InventoryItems);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEquipPrimaryWeapon, const FInventoryItem&, PrimaryWeapon);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 
@@ -93,7 +94,9 @@ public:
 	void UpdateInventory();
 
 	UPROPERTY(BlueprintAssignable, Category = "Inventory")
-	FUpdateInventoryDelegate OnUpdateInventory;
+	FUpdateInventoryDelegate OnUpdateInventory;	
+	UPROPERTY(BlueprintAssignable, Category = "Inventory")
+	FEquipPrimaryWeapon OnEquipPrimaryWeapon;
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory Management")
 	void AddItem(FInventoryItem Item);
@@ -104,14 +107,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory Management")
 	void DeleteItem(int32 Slot);
 
-
-	//UFUNCTION(BlueprintCallable, Category = "Inventory")
-	//void 
-
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Inventory")
 	int32 InventorySize = 20;
+
+	void UseWeapon(FInventoryItem Item);
 
 	
 };

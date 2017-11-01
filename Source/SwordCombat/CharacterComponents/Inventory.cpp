@@ -55,7 +55,7 @@ void UInventory::UseItem(FInventoryItem Item){
 		UE_LOG(LogTemp, Warning, TEXT("Item Type None"));
 		break;
 	case EItemType::WEAPON:
-		UE_LOG(LogTemp, Warning, TEXT("Item Type WEAPON"));
+		UseWeapon(Item);
 		break;
 	case EItemType::HELMET:
 		UE_LOG(LogTemp, Warning, TEXT("Item Type HELMET"));
@@ -73,4 +73,12 @@ void UInventory::DeleteItem(int32 Slot){
 		InventoryItems.RemoveAt(Slot);
 		UpdateInventory();
 	}
+}
+
+void UInventory::UseWeapon(FInventoryItem Item){
+	UE_LOG(LogTemp, Warning, TEXT("Item Type WEAPON"));
+	OnEquipPrimaryWeapon.Broadcast(Item);
+
+
+
 }
