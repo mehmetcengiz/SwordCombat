@@ -100,6 +100,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory Management")
 	void UseItem(FInventoryItem Item);
+	
+	UFUNCTION(BlueprintCallable, Category = "Inventory Management")
+	void DeleteItem(int32 Slot);
 
 
 	//UFUNCTION(BlueprintCallable, Category = "Inventory")

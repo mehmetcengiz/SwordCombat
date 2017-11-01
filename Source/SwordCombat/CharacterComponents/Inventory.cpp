@@ -28,7 +28,9 @@ void UInventory::BeginPlay(){
 void UInventory::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction){
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	//for (FInventoryItem item : InventoryItems){
+	//	UE_LOG(LogTemp, Warning, TEXT("I Have %s "), *item.Name);
+	//}
 }
 
 void UInventory::SetPrimaryWeapon(ACharacterWeapon* WeaponToSet){
@@ -40,13 +42,17 @@ void UInventory::UpdateInventory(){
 }
 
 void UInventory::AddItem(FInventoryItem Item){
-	if(InventoryItems.Num() < InventorySize){
+	if (InventoryItems.Num() < InventorySize){
 		InventoryItems.Add(Item);
 	}
 	UpdateInventory();
 }
 
-void UInventory::UseItem(FInventoryItem Item){
-	
-}
+void UInventory::UseItem(FInventoryItem Item){ }
 
+void UInventory::DeleteItem(int32 Slot){
+	if (Slot < InventoryItems.Num()){
+		InventoryItems.RemoveAt(Slot);
+		UpdateInventory();
+	}
+}
