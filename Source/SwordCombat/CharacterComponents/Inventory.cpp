@@ -77,7 +77,6 @@ void UInventory::DeleteItem(int32 Slot){
 
 void UInventory::UseWeapon(FInventoryItem Item){
 	UE_LOG(LogTemp, Warning, TEXT("Item Type WEAPON"));
-	OnEquipPrimaryWeapon.Broadcast(Item);
 
 
 
