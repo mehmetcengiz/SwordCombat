@@ -45,6 +45,7 @@ private:
 	void EnableSaveCombo(){ bSaveCombo = true; }
 	void SaveCombo();
 	void ResetCombo();
+	void PrimaryAttack();
 
 	int32 PrimaryAttackIndex = 0;
 
@@ -53,6 +54,7 @@ private:
 	                int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	float GetHitAngle(AActor* OtherActor);
+
 
 protected:
 	void OnPrimaryAttack() override;

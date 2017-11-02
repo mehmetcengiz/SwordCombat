@@ -30,35 +30,15 @@ void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 	}
 }
 
-
 void ATwinBlade::OnPrimaryAttack(){
 	Super::OnPrimaryAttack();
 	UE_LOG(LogTemp, Warning, TEXT("ATwinBlade >> OnPrimaryAttack"));
+	
+	/*Save combo*/
+	if (bSaveCombo){	SaveCombo();	}
 
-	if (bSaveCombo){
-		SaveCombo();
-		bSaveCombo = false;
-	}
+	if (CombatCharacter->IsReadyToAttack()){	PrimaryAttack();	}
 
-	if (CombatCharacter->IsReadyToAttack()){
-
-		//Play montage and set character is ready to attacking to false. 
-		float MontageTime = CombatCharacter->GetMesh()->GetAnimInstance()->Montage_Play(PrimaryAttackCombos[PrimaryAttackIndex], 1.0f, EMontagePlayReturnType::MontageLength, 0);
-		CombatCharacter->DisableAttackingForCertainTime(MontageTime / 3);
-		
-		//Set min max times for combo trigger. 
-		NextComboMinTime = MontageTime / 3;
-		NextComboMaxTime = MontageTime;
-
-		//Execute saving combo trigger and reseting combo by times.
-		FTimerHandle Handle;
-		GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ATwinBlade::EnableSaveCombo, NextComboMinTime, false);
-		FTimerHandle Handle2;
-		GetWorld()->GetTimerManager().SetTimer(OUT Handle2, this, &ATwinBlade::ResetCombo, NextComboMaxTime, false);
-
-		//Clear the hit actor array.
-		HitActors.Empty();
-	}
 }
 
 void ATwinBlade::EnableWeaponCollider(){
@@ -77,6 +57,7 @@ void ATwinBlade::SaveCombo(){
 	if (PrimaryAttackIndex >= PrimaryAttackCombos.Num()){
 		ResetCombo();
 	}
+	bSaveCombo = false;
 }
 
 void ATwinBlade::ResetCombo(){
@@ -99,4 +80,23 @@ float ATwinBlade::GetHitAngle(AActor* OtherActor){
 	DeltaRotator.Normalize();
 
 	return DeltaRotator.Yaw;
+}
+
+void ATwinBlade::PrimaryAttack() {
+	//Play montage and set character is ready to attacking to false. 
+	float MontageTime = CombatCharacter->GetMesh()->GetAnimInstance()->Montage_Play(PrimaryAttackCombos[PrimaryAttackIndex], 1.0f, EMontagePlayReturnType::MontageLength, 0);
+	CombatCharacter->DisableAttackingForCertainTime(MontageTime / 3);
+
+	//Set min max times for combo trigger. 
+	NextComboMinTime = MontageTime / 3;
+	NextComboMaxTime = MontageTime;
+
+	//Execute saving combo trigger and reseting combo by times.
+	FTimerHandle Handle;
+	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ATwinBlade::EnableSaveCombo, NextComboMinTime, false);
+	FTimerHandle Handle2;
+	GetWorld()->GetTimerManager().SetTimer(OUT Handle2, this, &ATwinBlade::ResetCombo, NextComboMaxTime, false);
+
+	//Clear the hit actor array.
+	HitActors.Empty();
 }
