@@ -64,6 +64,15 @@ protected:
 	void RemoveActorFromCloseAttackerList(AActor* ActorToRemove);
 	UFUNCTION(BlueprintCallable, Category = "Attacking")
 	TArray<AActor*> GetCloseAttackerList() const{ return CloseAttackerList; }
+	UFUNCTION(BlueprintCallable, Category = "Attacking")
+	void ToggleFocusToCharacter();
+	UFUNCTION(BlueprintCallable, Category = "Attacking")
+	void FocusToNextEnemy();
+	UFUNCTION(BlueprintCallable, Category = "Attacking")
+	void FocusToPrevEnemy();
+
+	bool bIsCharacterFocused = false; // TODO make private later.
+	int32 FocusedCharacterIndex = 0; // TODO make private later.
 
 	UPROPERTY()
 	TArray<AActor*> CloseAttackerList;

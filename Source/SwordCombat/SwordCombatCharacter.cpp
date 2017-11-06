@@ -68,6 +68,7 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	PlayerInputComponent->BindAction("FocusToEnemy", IE_Pressed, this, &ASwordCombatCharacter::ToggleFocusToCharacter);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASwordCombatCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASwordCombatCharacter::MoveRight);
@@ -79,6 +80,7 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAxis("TurnRate", this, &ASwordCombatCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASwordCombatCharacter::LookUpAtRate);
+	
 
 	//Combat attack.
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASwordCombatCharacter::OnRightButtonPressed);
@@ -101,7 +103,14 @@ void ASwordCombatCharacter::BeginPlay(){
 }
 
 void ASwordCombatCharacter::Tick(float DeltaTime){
-	
+	if(bIsCharacterFocused){
+		UE_LOG(LogTemp, Warning, TEXT("Player is focusing !!!!!!!!!!!!"));
+		if (CloseAttackerList.Num() == 0) { return; }
+		FVector Direction = CloseAttackerList[FocusedCharacterIndex]->GetActorLocation() - GetActorLocation();
+		FRotator DesiredRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
+		SetActorRotation(DesiredRotation);
+		CameraBoom->SetRelativeRotation(DesiredRotation);
+	}
 }
 
 void ASwordCombatCharacter::AddActorToCloseAttackerList(AActor* ActorToFocus){
@@ -114,6 +123,28 @@ void ASwordCombatCharacter::RemoveActorFromCloseAttackerList(AActor* ActorToRemo
 	if (!ActorToRemove->ActorHasTag(FName("Enemy"))) { return; }
 	CloseAttackerList.Remove(ActorToRemove);
 }
+
+void ASwordCombatCharacter::ToggleFocusToCharacter(){
+	if(bIsCharacterFocused && CloseAttackerList.Num() <= 0){
+		bIsCharacterFocused = false;
+	}else{
+		bIsCharacterFocused = !bIsCharacterFocused;
+	}
+
+}
+
+void ASwordCombatCharacter::FocusToNextEnemy(){
+	FocusedCharacterIndex++;
+	FocusedCharacterIndex = FocusedCharacterIndex % CloseAttackerList.Num();
+}
+
+void ASwordCombatCharacter::FocusToPrevEnemy(){
+	FocusedCharacterIndex--;
+	if(FocusedCharacterIndex < 0){
+		FocusedCharacterIndex = CloseAttackerList.Num();
+	}
+}
+
 
 void ASwordCombatCharacter::OnRightButtonPressed(){
 	if (CharacterState == NULL){
@@ -165,6 +196,7 @@ void ASwordCombatCharacter::MoveForward(float Value){
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
+
 	}
 }
 
@@ -178,6 +210,9 @@ void ASwordCombatCharacter::MoveRight(float Value){
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
+
+		//If character goes right camera helps to turn.
+		TurnAtRate(Value / 4);
 	}
 }
 
