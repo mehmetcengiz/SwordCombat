@@ -58,6 +58,16 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable, Category = "Attacking")
+	void AddActorToCloseAttackerList(AActor* ActorToFocus);
+	UFUNCTION(BlueprintCallable, Category = "Attacking")
+	void RemoveActorFromCloseAttackerList(AActor* ActorToRemove);
+	UFUNCTION(BlueprintCallable, Category = "Attacking")
+	TArray<AActor*> GetCloseAttackerList() const{ return CloseAttackerList; }
+
+	UPROPERTY()
+	TArray<AActor*> CloseAttackerList;
+
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
 

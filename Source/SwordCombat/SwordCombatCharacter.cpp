@@ -20,13 +20,16 @@
 // ASwordCombatCharacter
 
 ASwordCombatCharacter::ASwordCombatCharacter(){
+	
+	//Tick enabled
+	PrimaryActorTick.bCanEverTick = true;
+
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
 	// set our turn rates for input
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
-
 
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
@@ -55,8 +58,6 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 
 	CharacterInventory = CreateDefaultSubobject<UInventory>(TEXT("Character Inventory"));
 	
-	//Tick enabled
-	PrimaryActorTick.bCanEverTick = true;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -101,6 +102,17 @@ void ASwordCombatCharacter::BeginPlay(){
 
 void ASwordCombatCharacter::Tick(float DeltaTime){
 	
+}
+
+void ASwordCombatCharacter::AddActorToCloseAttackerList(AActor* ActorToFocus){
+	if (!ActorToFocus->ActorHasTag(FName("Enemy"))) { return; }
+	CloseAttackerList.Add(ActorToFocus);
+
+}
+
+void ASwordCombatCharacter::RemoveActorFromCloseAttackerList(AActor* ActorToRemove){
+	if (!ActorToRemove->ActorHasTag(FName("Enemy"))) { return; }
+	CloseAttackerList.Remove(ActorToRemove);
 }
 
 void ASwordCombatCharacter::OnRightButtonPressed(){
