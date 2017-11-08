@@ -103,6 +103,8 @@ void ASwordCombatCharacter::BeginPlay(){
 }
 
 void ASwordCombatCharacter::Tick(float DeltaTime){
+
+
 	if(bIsCharacterFocused){
 		UE_LOG(LogTemp, Warning, TEXT("Player is focusing !!!!!!!!!!!!"));
 		if (CloseAttackerList.Num() == 0) { return; }
