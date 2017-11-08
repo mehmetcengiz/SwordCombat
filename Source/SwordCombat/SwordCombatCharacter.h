@@ -113,7 +113,7 @@ public:
 	ACharacterWeapon* GetPrimaryWeapon() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	void EquipWeapon(UClass* WeaponClass);	
+	void EquipWeapon(UClass* WeaponClass);
 
 
 

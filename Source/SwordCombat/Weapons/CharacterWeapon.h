@@ -26,8 +26,9 @@ public:
 	void InitializeCharacterWeapon(ASwordCombatCharacter* CharacterToSet);
 	UClass* GetWeaponAnimInstance();
 	
-	
 
+	FName GetWeaponSocketName() const { return WeaponSocketName; }
+	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Character")
 	ASwordCombatCharacter* CombatCharacter = nullptr;
@@ -40,5 +41,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly,Category="Animations")
 	TSubclassOf<UAnimInstance> WeaponAnimInstance;
 
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	FName WeaponSocketName = "TwoHandedSwordSheath";
 
 };

@@ -240,12 +240,16 @@ ACharacterWeapon* ASwordCombatCharacter::GetPrimaryWeapon() const{
 	return CharacterInventory->GetPrimaryWeapon();
 }
 
-void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {	
-	FName fnWeaponSocket = TEXT("TwinBladeSheath");
-	const FVector spawnLocation = GetMesh()->GetSocketLocation("TwinBladeSheath");
-	const FRotator spawnRotation = GetMesh()->GetSocketRotation("TwinBladeSheath");
-	const FActorSpawnParameters spawnParams;
-	auto Weapon = GetWorld()->SpawnActor<ACharacterWeapon>(WeaponClass, spawnLocation, spawnRotation, spawnParams);
+void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {
+	
+	auto Weapon = GetWorld()->SpawnActor<ACharacterWeapon>(WeaponClass);
+	FName fnWeaponSocket = Weapon->GetWeaponSocketName();
+
+	const FVector spawnLocation = GetMesh()->GetSocketLocation(fnWeaponSocket);
+	const FRotator spawnRotation = GetMesh()->GetSocketRotation(fnWeaponSocket);
+	
+	Weapon->SetActorRotation(spawnRotation);
+	Weapon->SetActorLocation(spawnLocation);
 	Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,fnWeaponSocket);
 	Weapon->InitializeCharacterWeapon(this);
 

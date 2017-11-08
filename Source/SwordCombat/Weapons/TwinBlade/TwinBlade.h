@@ -17,7 +17,6 @@ UCLASS()
 
 class SWORDCOMBAT_API ATwinBlade : public ACharacterWeapon {
 	GENERATED_BODY()
-
 protected:
 
 	void BeginPlay() override;
@@ -31,6 +30,7 @@ protected:
 
 	UBoxComponent* BoxComponent = nullptr;
 	TArray<AActor*> HitActors;
+
 
 private:
 	/**Min time for player to press attack again to execute next combo.*/
