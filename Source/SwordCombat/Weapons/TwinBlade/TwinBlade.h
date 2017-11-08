@@ -20,17 +20,9 @@ class SWORDCOMBAT_API ATwinBlade : public ACharacterWeapon {
 protected:
 
 	void BeginPlay() override;
-	void GetCharacterHitAngleByCombatCharacter(AActor* OtherActor, float& Angle);
-
-
 
 	UBoxComponent* BoxComponent = nullptr;
-
-
-private:
-
-	void PrimaryAttack();
-
+	
 protected:
 	void OnPrimaryAttack() override;
 

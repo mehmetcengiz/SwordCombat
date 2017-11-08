@@ -16,6 +16,27 @@ void ACharacterWeapon::OnPrimaryAttack(){
 	//TODO I left here. Create 2 weapon actors by using this class as base class.
 }
 
+
+
+void ACharacterWeapon::PrimaryAttack() {
+	//Play montage and set character is ready to attacking to false. 
+	float MontageTime = CombatCharacter->GetMesh()->GetAnimInstance()->Montage_Play(PrimaryAttackCombos[PrimaryAttackIndex], 1.0f, EMontagePlayReturnType::MontageLength, 0);
+	CombatCharacter->DisableAttackingForCertainTime(MontageTime / 3);
+
+	//Set min max times for combo trigger. 
+	NextComboMinTime = MontageTime / 3;
+	NextComboMaxTime = MontageTime;
+
+	//Execute saving combo trigger and reseting combo by times.
+	FTimerHandle Handle;
+	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ACharacterWeapon::EnableSaveCombo, NextComboMinTime, false);
+	FTimerHandle Handle2;
+	GetWorld()->GetTimerManager().SetTimer(OUT Handle2, this, &ACharacterWeapon::ResetCombo, NextComboMaxTime, false);
+
+	//Clear the hit actor array.
+	HitActors.Empty();
+}
+
 void ACharacterWeapon::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
 	const FHitResult& SweepResult) {
