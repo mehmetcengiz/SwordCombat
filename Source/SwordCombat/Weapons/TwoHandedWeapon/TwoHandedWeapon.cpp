@@ -2,6 +2,7 @@
 
 #include "TwoHandedWeapon.h"
 
+
 void ATwoHandedWeapon::BeginPlay(){
 	Super::BeginPlay();
 }
@@ -11,5 +12,16 @@ void ATwoHandedWeapon::OnPrimaryAttack(){
 	UE_LOG(LogTemp, Warning, TEXT("ATwoHandedWeapon >> OnPrimaryAttack"));
 }
 
+void ATwoHandedWeapon::EnableWeaponCollider(){
+	Super::EnableWeaponCollider();
+}
+
+void ATwoHandedWeapon::DisableWeaponCollider(){
+	Super::DisableWeaponCollider();
+}
+
+void ATwoHandedWeapon::PrimaryAttack(){
+	
+}
 
 

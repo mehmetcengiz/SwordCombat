@@ -14,21 +14,6 @@ void ATwinBlade::BeginPlay(){
 	
 }
 
-void ATwinBlade::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-                            UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
-                            const FHitResult& SweepResult){
-
-	//If actor has tag and actor has not hited before and actor not hited himself.
-	if(OtherActor->ActorHasTag(FName("Enemy")) && !HitActors.Contains(OtherActor->GetOwner()) && OtherActor->GetOwner() != CombatCharacter){
-		HitActors.Add(OtherActor->GetOwner());
-		//TODO hit to actor.
-		//TODO Get hit location.
-		
-		float Angle = GetHitAngle(OtherActor);
-	
-		static_cast<ASwordCombatCharacter*>(OtherActor)->TakeHit(30, Angle);//TODO implement damage later.
-	}
-}
 
 void ATwinBlade::OnPrimaryAttack(){
 	Super::OnPrimaryAttack();
@@ -51,36 +36,8 @@ void ATwinBlade::DisableWeaponCollider(){
 	BoxComponent->SetCollisionEnabled(ECollisionEnabled::Type::NoCollision);
 }
 
-void ATwinBlade::SaveCombo(){
-	//TODO save combo;
-	PrimaryAttackIndex++;
-	if (PrimaryAttackIndex >= PrimaryAttackCombos.Num()){
-		ResetCombo();
-	}
-	bSaveCombo = false;
-}
 
-void ATwinBlade::ResetCombo(){
-	if (bSaveCombo){
-		bSaveCombo = false;
-		PrimaryAttackIndex = 0;
-		//Reset combo.
-	}
-}
 
-float ATwinBlade::GetHitAngle(AActor* OtherActor){
-
-	auto OtherActForwardVector = OtherActor->GetActorForwardVector();
-	auto CombatActForward = CombatCharacter->GetActorForwardVector();
-
-	auto OtherActRotator = FRotationMatrix::MakeFromX(OtherActForwardVector).Rotator();
-	auto CombatActRotator = FRotationMatrix::MakeFromX(CombatActForward).Rotator();
-
-	auto DeltaRotator = OtherActRotator - CombatActRotator;
-	DeltaRotator.Normalize();
-
-	return DeltaRotator.Yaw;
-}
 
 void ATwinBlade::PrimaryAttack() {
 	//Play montage and set character is ready to attacking to false. 
