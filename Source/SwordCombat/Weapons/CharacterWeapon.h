@@ -9,6 +9,7 @@
 #include "Animation/AnimInstance.h"
 #include "CharacterWeapon.generated.h"
 
+class UBoxComponent;
 /**
  * 
  */
@@ -30,6 +31,8 @@ public:
 	FName GetWeaponSocketName() const { return WeaponSocketName; }
 	
 protected:
+
+	UBoxComponent* BoxComponent = nullptr;
 
 	TArray<AActor*> HitActors;	
 	

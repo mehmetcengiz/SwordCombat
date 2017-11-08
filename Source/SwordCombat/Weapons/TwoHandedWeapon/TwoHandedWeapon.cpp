@@ -10,18 +10,10 @@ void ATwoHandedWeapon::BeginPlay(){
 void ATwoHandedWeapon::OnPrimaryAttack(){
 	Super::OnPrimaryAttack();
 	UE_LOG(LogTemp, Warning, TEXT("ATwoHandedWeapon >> OnPrimaryAttack"));
-}
 
-void ATwoHandedWeapon::EnableWeaponCollider(){
-	Super::EnableWeaponCollider();
-}
+	/*Save combo*/
+	if (bSaveCombo) { SaveCombo(); }
 
-void ATwoHandedWeapon::DisableWeaponCollider(){
-	Super::DisableWeaponCollider();
+	if (CombatCharacter->IsReadyToAttack()) { PrimaryAttack(); }
 }
-
-void ATwoHandedWeapon::PrimaryAttack(){
-	
-}
-
 

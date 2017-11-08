@@ -1,10 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CharacterWeapon.h"
+#include "Components/BoxComponent.h"
 
 
 void ACharacterWeapon::BeginPlay(){
 	Super::BeginPlay();
+
+	BoxComponent = FindComponentByClass<UBoxComponent>();
+	if(BoxComponent!=NULL){
+		BoxComponent->SetCollisionEnabled(ECollisionEnabled::Type::NoCollision);
+	}
+	
 }
 
 void ACharacterWeapon::Tick(float DeltaTime){
@@ -77,11 +84,14 @@ void ACharacterWeapon::ResetCombo() {
 }
 
 void ACharacterWeapon::EnableWeaponCollider(){
-	
+	if (BoxComponent == nullptr) { return; }
+	BoxComponent->SetCollisionEnabled(ECollisionEnabled::Type::QueryOnly);
 }
 
 void ACharacterWeapon::DisableWeaponCollider(){
-	
+
+	if (BoxComponent == nullptr) { return; }
+	BoxComponent->SetCollisionEnabled(ECollisionEnabled::Type::NoCollision);
 }
 
 float ACharacterWeapon::GetHitAngle(AActor* OtherActor) const{

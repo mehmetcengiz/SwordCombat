@@ -6,6 +6,7 @@
 #include "Weapons/CharacterWeapon.h"
 #include "TwoHandedWeapon.generated.h"
 
+
 /**
  * 
  */
@@ -16,16 +17,8 @@ class SWORDCOMBAT_API ATwoHandedWeapon : public ACharacterWeapon
 
 private:
 
-	void PrimaryAttack();
-
-
-
 protected:
 	void BeginPlay() override;
 	void OnPrimaryAttack() override;
-	
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	void EnableWeaponCollider() override;
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	void DisableWeaponCollider() override;
+
 };

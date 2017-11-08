@@ -6,9 +6,6 @@
 #include "Weapons/CharacterWeapon.h"
 #include "TwinBlade.generated.h"
 
-
-class UAnimMontage;
-class ACharacter;
 class UBoxComponent;
 /**
  * 
@@ -25,10 +22,5 @@ protected:
 	
 protected:
 	void OnPrimaryAttack() override;
-
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	void EnableWeaponCollider() override;
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	void DisableWeaponCollider() override;
 
 };
