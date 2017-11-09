@@ -107,9 +107,9 @@ protected:
 	UInventory* CharacterInventory = nullptr;
 	
 	UPROPERTY(EditDefaultsOnly,Category = "Character")
-	float FocusedSpeed = 250;
+	float FocusedSpeed = 325;
 	UPROPERTY(EditDefaultsOnly,Category = "Character")
-	float DefaultSpeed = 375;
+	float DefaultSpeed = 400;
 
 public:
 	UFUNCTION(BlueprintCallable,Category="Animations")

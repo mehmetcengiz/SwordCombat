@@ -20,7 +20,7 @@
 // ASwordCombatCharacter
 
 ASwordCombatCharacter::ASwordCombatCharacter(){
-	
+
 	//Tick enabled
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -41,7 +41,7 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
 	GetCharacterMovement()->JumpZVelocity = 600.f;
 	GetCharacterMovement()->AirControl = 0.2f;
-	
+
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
@@ -57,7 +57,7 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
 	CharacterInventory = CreateDefaultSubobject<UInventory>(TEXT("Character Inventory"));
-	
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAxis("TurnRate", this, &ASwordCombatCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASwordCombatCharacter::LookUpAtRate);
-	
+
 
 	//Combat attack.
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASwordCombatCharacter::OnRightButtonPressed);
@@ -89,15 +89,15 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 void ASwordCombatCharacter::BeginPlay(){
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("Game has started."));
-	
+
 	/*Create default chracter state*/
 	SwitchCharacterState(ECharacterState::COMBAT);
-	
+
 	//TODO Later set animation instance depends on weapon for every enemy. 
-	if(this->ActorHasTag(FName("Player"))){
+	if (this->ActorHasTag(FName("Player"))){
 		SetAnimationInstanceToDefault();
 	}
-	
+
 	CurrentHealth = MaxHealth;
 
 }
@@ -113,31 +113,32 @@ void ASwordCombatCharacter::SetPlayerRotationToFocusedEnemy(){
 void ASwordCombatCharacter::Tick(float DeltaTime){
 
 
-	if(bIsCharacterFocused){
-		if (CloseAttackerList.Num() <= 0) { ToggleFocusToCharacter(); }
+	if (bIsCharacterFocused){
+		if (CloseAttackerList.Num() <= 0){ ToggleFocusToCharacter(); }
 		SetPlayerRotationToFocusedEnemy();
 	}
 
-	
+
 }
 
 void ASwordCombatCharacter::AddActorToCloseAttackerList(AActor* ActorToFocus){
-	if (!ActorToFocus->ActorHasTag(FName("Enemy"))) { return; }
+	if (!ActorToFocus->ActorHasTag(FName("Enemy"))){ return; }
 	CloseAttackerList.Add(ActorToFocus);
 
 }
 
 void ASwordCombatCharacter::RemoveActorFromCloseAttackerList(AActor* ActorToRemove){
-	if (!ActorToRemove->ActorHasTag(FName("Enemy"))) { return; }
+	if (!ActorToRemove->ActorHasTag(FName("Enemy"))){ return; }
 	CloseAttackerList.Remove(ActorToRemove);
 }
 
 void ASwordCombatCharacter::ToggleFocusToCharacter(){
-	if(bIsCharacterFocused){
+	if (bIsCharacterFocused){
 		bIsCharacterFocused = false;
 		GetCharacterMovement()->MaxWalkSpeed = DefaultSpeed;
 		CameraBoom->bUsePawnControlRotation = true;
-	}else if(!bIsCharacterFocused){
+	}
+	else if (!bIsCharacterFocused){
 		bIsCharacterFocused = true;
 		GetCharacterMovement()->MaxWalkSpeed = FocusedSpeed;
 		CameraBoom->bUsePawnControlRotation = false;
@@ -152,7 +153,7 @@ void ASwordCombatCharacter::FocusToNextEnemy(){
 
 void ASwordCombatCharacter::FocusToPrevEnemy(){
 	FocusedCharacterIndex--;
-	if(FocusedCharacterIndex < 0){
+	if (FocusedCharacterIndex < 0){
 		FocusedCharacterIndex = CloseAttackerList.Num();
 	}
 }
@@ -168,16 +169,17 @@ void ASwordCombatCharacter::OnRightButtonPressed(){
 
 void ASwordCombatCharacter::SwitchCharacterState(ECharacterState CharacterStateEnum){
 
-	if(CharacterStateEnum == ECharacterState::COMBAT && CurrentCharacterState !=ECharacterState::COMBAT){
+	if (CharacterStateEnum == ECharacterState::COMBAT && CurrentCharacterState != ECharacterState::COMBAT){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Combat state"));
 		CurrentCharacterState = ECharacterState::COMBAT;
-		if(CharacterState)
+		if (CharacterState)
 			CharacterState->DestroyComponent(false);
 		CharacterState = ConstructObject<UCombatState>(UCombatState::StaticClass(), this, TEXT("Combat State"));
 		CharacterState->RegisterComponent();
 		CharacterState->OnComponentCreated();
 
-	}else if(CharacterStateEnum == ECharacterState::INTERACT && CurrentCharacterState != ECharacterState::INTERACT){
+	}
+	else if (CharacterStateEnum == ECharacterState::INTERACT && CurrentCharacterState != ECharacterState::INTERACT){
 		UE_LOG(LogTemp, Warning, TEXT("Character state switched to Interact state"));
 		CurrentCharacterState = ECharacterState::INTERACT;
 		if (CharacterState)
@@ -192,52 +194,57 @@ void ASwordCombatCharacter::SwitchCharacterState(ECharacterState CharacterStateE
 void ASwordCombatCharacter::TurnAtRate(float Rate){
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
-	
-	
+
+
 }
 
 void ASwordCombatCharacter::LookUpAtRate(float Rate){
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
-	
+
 }
 
 void ASwordCombatCharacter::MoveForward(float Value){
 	MoveForwardValue = Value;
 	if ((Controller != NULL) && (Value != 0.0f)){
 		FVector Direction;
-		if (!bIsCharacterFocused) {
-			// find out which way is forward
-			const FRotator Rotation = Controller->GetControlRotation();
-			const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-			// get forward vector
-			Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		}else{
-			Direction = CloseAttackerList[FocusedCharacterIndex]->GetActorLocation() - GetActorLocation();
-		}
-		AddMovementInput(Direction, Value);
+		// find out which way is forward
 		
+		FRotator Rotation;
+		if (!bIsCharacterFocused){
+			Rotation = Controller->GetControlRotation();
+		}
+		else{
+			Rotation = GetActorRotation();
+		}
+		
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		// get forward vector
+		Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+		AddMovementInput(Direction, Value);
+
 	}
 }
 
 void ASwordCombatCharacter::MoveRight(float Value){
 	MoveRightValue = Value;
 	if ((Controller != NULL) && (Value != 0.0f)){
-		FVector Direction;
-		if (!bIsCharacterFocused) {
-			// find out which way is right
-			const FRotator Rotation = Controller->GetControlRotation();
-			const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-			// get right vector 
-			Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-			// add movement in that direction		
-		}else{
-			Direction = GetActorRightVector();
+		// find out which way is right
+		
+		FRotator Rotation;
+		if (!bIsCharacterFocused){
+			Rotation = Controller->GetControlRotation();
 		}
-		//If character goes right camera helps to turn.
-		//TurnAtRate(Value / 4);
+		else{
+			Rotation = GetActorRotation();
+		}
+
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		// get right vector 
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		// add movement in that direction		
 
 		AddMovementInput(Direction, Value);
 
@@ -246,17 +253,17 @@ void ASwordCombatCharacter::MoveRight(float Value){
 
 void ASwordCombatCharacter::SetAnimationInstance(UClass* AnimInstanceToSet){
 	if (CharacterState == NULL){
-		UE_LOG(LogTemp, Warning, TEXT("Character State is NULL")); 
+		UE_LOG(LogTemp, Warning, TEXT("Character State is NULL"));
 		return;
 	}
 	//TODO switch animation depends on weapon animation or interactstate animations etc.
-	
+
 	GetMesh()->SetAnimationMode(EAnimationMode::Type::AnimationBlueprint);
 	GetMesh()->SetAnimInstanceClass(AnimInstanceToSet);
 }
 
 void ASwordCombatCharacter::SetAnimationInstanceToDefault(){
-	if (CharacterState == NULL) {
+	if (CharacterState == NULL){
 		UE_LOG(LogTemp, Warning, TEXT("Character State is NULL"));
 		return;
 	}
@@ -268,21 +275,21 @@ ACharacterWeapon* ASwordCombatCharacter::GetPrimaryWeapon() const{
 	return CharacterInventory->GetPrimaryWeapon();
 }
 
-void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass) {
-	
+void ASwordCombatCharacter::EquipWeapon(UClass* WeaponClass){
+
 	auto Weapon = GetWorld()->SpawnActor<ACharacterWeapon>(WeaponClass);
 	FName fnWeaponSocket = Weapon->GetWeaponSocketName();
 
 	const FVector spawnLocation = GetMesh()->GetSocketLocation(fnWeaponSocket);
 	const FRotator spawnRotation = GetMesh()->GetSocketRotation(fnWeaponSocket);
-	
+
 	Weapon->SetActorRotation(spawnRotation);
 	Weapon->SetActorLocation(spawnLocation);
-	Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,fnWeaponSocket);
+	Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, fnWeaponSocket);
 	Weapon->InitializeCharacterWeapon(this);
 
 
-	if(CharacterInventory){
+	if (CharacterInventory){
 		CharacterInventory->SetPrimaryWeapon(Weapon);
 	}
 }
@@ -304,12 +311,12 @@ void ASwordCombatCharacter::EnableAttacking(){
 void ASwordCombatCharacter::PutSwordBackToSheath(){
 	FName fnWeaponSocket = TEXT("TwinBladeSheath");
 
-	if (CharacterInventory != NULL) {
+	if (CharacterInventory != NULL){
 		CharacterInventory->GetPrimaryWeapon()->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, fnWeaponSocket);
 	}
 }
 
-void ASwordCombatCharacter::TakeHit(float Damage, float DamageLocation) {
+void ASwordCombatCharacter::TakeHit(float Damage, float DamageLocation){
 	UE_LOG(LogTemp, Warning, TEXT("I tooked hit !!!"));
 	//TODO Play Animation. 
 	bGotHit = true;
@@ -318,13 +325,13 @@ void ASwordCombatCharacter::TakeHit(float Damage, float DamageLocation) {
 	LastDamageLocation = DamageLocation;
 	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::ResetCharacter, DisableAttackingOnHitTime, false);
 	//TODO Apply damage.
-	CurrentHealth -= Damage; 
-	if (CurrentHealth <= 0) {
+	CurrentHealth -= Damage;
+	if (CurrentHealth <= 0){
 		PlayDeath();
 	}
 }
 
-void ASwordCombatCharacter::ResetCharacter() {
+void ASwordCombatCharacter::ResetCharacter(){
 	bGotHit = false;
 	bIsReadyToAttack = true;
 }
@@ -339,7 +346,3 @@ void ASwordCombatCharacter::PlayDeath(){
 void ASwordCombatCharacter::DisableFromWorld(){
 	SetActorEnableCollision(false);
 }
-
-
-
-
