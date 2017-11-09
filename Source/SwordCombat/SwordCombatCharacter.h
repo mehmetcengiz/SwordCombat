@@ -56,6 +56,7 @@ protected:
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	void SetPlayerRotationToFocusedEnemy();
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Attacking")
@@ -73,6 +74,9 @@ protected:
 
 	bool bIsCharacterFocused = false; // TODO make private later.
 	int32 FocusedCharacterIndex = 0; // TODO make private later.
+
+	UFUNCTION(BlueprintCallable, Category = "Attacking")
+	bool GetIsFocusedToEnemy() const { return bIsCharacterFocused; }
 
 	UPROPERTY()
 	TArray<AActor*> CloseAttackerList;
@@ -101,6 +105,11 @@ protected:
 	/*Inventory*/
 	UPROPERTY(Category = "Character", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UInventory* CharacterInventory = nullptr;
+	
+	UPROPERTY(EditDefaultsOnly,Category = "Character")
+	float FocusedSpeed = 250;
+	UPROPERTY(EditDefaultsOnly,Category = "Character")
+	float DefaultSpeed = 375;
 
 public:
 	UFUNCTION(BlueprintCallable,Category="Animations")
@@ -115,12 +124,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void EquipWeapon(UClass* WeaponClass);
 
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	float GetForwardValue() const { return MoveForwardValue; }
 
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	float GetRightValue() const { return MoveRightValue; }
 
 	void DisableAttackingForCertainTime(float TimeToDisable);
 	void DisableAttacking();
 	void EnableAttacking();
-	bool IsReadyToAttack() { return bIsReadyToAttack; }
+	bool IsReadyToAttack() const{ return bIsReadyToAttack; }
 	void TakeHit(float Damage, float DamageLocation);
 	void PutSwordBackToSheath();
 	void ResetCharacter();
@@ -153,6 +166,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 	TSubclassOf<UAnimInstance> DefaultAnimation;
+
+	float MoveForwardValue = 0;
+	float MoveRightValue = 0;
+
 
 };
 

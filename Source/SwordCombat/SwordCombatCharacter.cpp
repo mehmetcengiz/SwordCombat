@@ -102,17 +102,23 @@ void ASwordCombatCharacter::BeginPlay(){
 
 }
 
+void ASwordCombatCharacter::SetPlayerRotationToFocusedEnemy(){
+	UE_LOG(LogTemp, Warning, TEXT("Player is focusing !!!!!!!!!!!!"));
+	if (CloseAttackerList.Num() == 0){ return; }
+	FVector Direction = CloseAttackerList[FocusedCharacterIndex]->GetActorLocation() - GetActorLocation();
+	FRotator DesiredActorRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
+	SetActorRotation(DesiredActorRotation);
+}
+
 void ASwordCombatCharacter::Tick(float DeltaTime){
 
 
 	if(bIsCharacterFocused){
-		UE_LOG(LogTemp, Warning, TEXT("Player is focusing !!!!!!!!!!!!"));
-		if (CloseAttackerList.Num() == 0) { return; }
-		FVector Direction = CloseAttackerList[FocusedCharacterIndex]->GetActorLocation() - GetActorLocation();
-		FRotator DesiredRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
-		SetActorRotation(DesiredRotation);
-		CameraBoom->SetRelativeRotation(DesiredRotation);
+		if (CloseAttackerList.Num() <= 0) { ToggleFocusToCharacter(); }
+		SetPlayerRotationToFocusedEnemy();
 	}
+
+	
 }
 
 void ASwordCombatCharacter::AddActorToCloseAttackerList(AActor* ActorToFocus){
@@ -127,10 +133,14 @@ void ASwordCombatCharacter::RemoveActorFromCloseAttackerList(AActor* ActorToRemo
 }
 
 void ASwordCombatCharacter::ToggleFocusToCharacter(){
-	if(bIsCharacterFocused && CloseAttackerList.Num() <= 0){
+	if(bIsCharacterFocused){
 		bIsCharacterFocused = false;
-	}else{
-		bIsCharacterFocused = !bIsCharacterFocused;
+		GetCharacterMovement()->MaxWalkSpeed = DefaultSpeed;
+		CameraBoom->bUsePawnControlRotation = true;
+	}else if(!bIsCharacterFocused){
+		bIsCharacterFocused = true;
+		GetCharacterMovement()->MaxWalkSpeed = FocusedSpeed;
+		CameraBoom->bUsePawnControlRotation = false;
 	}
 
 }
@@ -182,39 +192,55 @@ void ASwordCombatCharacter::SwitchCharacterState(ECharacterState CharacterStateE
 void ASwordCombatCharacter::TurnAtRate(float Rate){
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
+	
+	
 }
 
 void ASwordCombatCharacter::LookUpAtRate(float Rate){
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+	
 }
 
 void ASwordCombatCharacter::MoveForward(float Value){
+	MoveForwardValue = Value;
 	if ((Controller != NULL) && (Value != 0.0f)){
-		// find out which way is forward
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		FVector Direction;
+		if (!bIsCharacterFocused) {
+			// find out which way is forward
+			const FRotator Rotation = Controller->GetControlRotation();
+			const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		// get forward vector
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+			// get forward vector
+			Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		}else{
+			Direction = CloseAttackerList[FocusedCharacterIndex]->GetActorLocation() - GetActorLocation();
+		}
 		AddMovementInput(Direction, Value);
-
+		
 	}
 }
 
 void ASwordCombatCharacter::MoveRight(float Value){
+	MoveRightValue = Value;
 	if ((Controller != NULL) && (Value != 0.0f)){
-		// find out which way is right
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		FVector Direction;
+		if (!bIsCharacterFocused) {
+			// find out which way is right
+			const FRotator Rotation = Controller->GetControlRotation();
+			const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		// get right vector 
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		// add movement in that direction
+			// get right vector 
+			Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+			// add movement in that direction		
+		}else{
+			Direction = GetActorRightVector();
+		}
+		//If character goes right camera helps to turn.
+		//TurnAtRate(Value / 4);
+
 		AddMovementInput(Direction, Value);
 
-		//If character goes right camera helps to turn.
-		TurnAtRate(Value / 4);
 	}
 }
 
@@ -313,6 +339,7 @@ void ASwordCombatCharacter::PlayDeath(){
 void ASwordCombatCharacter::DisableFromWorld(){
 	SetActorEnableCollision(false);
 }
+
 
 
 
