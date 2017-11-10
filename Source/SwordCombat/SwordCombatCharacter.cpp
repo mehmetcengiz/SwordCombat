@@ -69,6 +69,8 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAction("FocusToEnemy", IE_Pressed, this, &ASwordCombatCharacter::ToggleFocusToCharacter);
+	/*PlayerInputComponent->BindAction("FocusNextTarget", IE_Pressed, this, &ASwordCombatCharacter::FocusToNextEnemy);
+	PlayerInputComponent->BindAction("FocusPrevTarget", IE_Pressed, this, &ASwordCombatCharacter::FocusToPrevEnemy);*/
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASwordCombatCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASwordCombatCharacter::MoveRight);
@@ -152,10 +154,11 @@ void ASwordCombatCharacter::FocusToNextEnemy(){
 }
 
 void ASwordCombatCharacter::FocusToPrevEnemy(){
-	FocusedCharacterIndex--;
-	if (FocusedCharacterIndex < 0){
+	if (FocusedCharacterIndex <= 0) {
 		FocusedCharacterIndex = CloseAttackerList.Num();
 	}
+	FocusedCharacterIndex--;
+
 }
 
 
