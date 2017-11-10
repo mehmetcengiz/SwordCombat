@@ -106,7 +106,7 @@ void ASwordCombatCharacter::BeginPlay(){
 
 void ASwordCombatCharacter::SetPlayerRotationToFocusedEnemy(){
 	UE_LOG(LogTemp, Warning, TEXT("Player is focusing !!!!!!!!!!!!"));
-	if (CloseAttackerList.Num() == 0){ return; }
+	if (!(CloseAttackerList.Num() > FocusedCharacterIndex)){ return; }
 	FVector Direction = CloseAttackerList[FocusedCharacterIndex]->GetActorLocation() - GetActorLocation();
 	FRotator DesiredActorRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
 	SetActorRotation(DesiredActorRotation);
