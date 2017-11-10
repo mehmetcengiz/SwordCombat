@@ -69,8 +69,8 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAction("FocusToEnemy", IE_Pressed, this, &ASwordCombatCharacter::ToggleFocusToCharacter);
-	/*PlayerInputComponent->BindAction("FocusNextTarget", IE_Pressed, this, &ASwordCombatCharacter::FocusToNextEnemy);
-	PlayerInputComponent->BindAction("FocusPrevTarget", IE_Pressed, this, &ASwordCombatCharacter::FocusToPrevEnemy);*/
+	PlayerInputComponent->BindAction("FocusNextTarget", IE_Pressed, this, &ASwordCombatCharacter::FocusToNextEnemy);
+	PlayerInputComponent->BindAction("FocusPrevTarget", IE_Pressed, this, &ASwordCombatCharacter::FocusToPrevEnemy);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASwordCombatCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASwordCombatCharacter::MoveRight);
@@ -99,7 +99,6 @@ void ASwordCombatCharacter::BeginPlay(){
 	if (this->ActorHasTag(FName("Player"))){
 		SetAnimationInstanceToDefault();
 	}
-
 	CurrentHealth = MaxHealth;
 
 }
@@ -113,14 +112,10 @@ void ASwordCombatCharacter::SetPlayerRotationToFocusedEnemy(){
 }
 
 void ASwordCombatCharacter::Tick(float DeltaTime){
-
-
 	if (bIsCharacterFocused){
 		if (CloseAttackerList.Num() <= 0){ ToggleFocusToCharacter(); }
 		SetPlayerRotationToFocusedEnemy();
 	}
-
-
 }
 
 void ASwordCombatCharacter::AddActorToCloseAttackerList(AActor* ActorToFocus){
@@ -158,7 +153,6 @@ void ASwordCombatCharacter::FocusToPrevEnemy(){
 		FocusedCharacterIndex = CloseAttackerList.Num();
 	}
 	FocusedCharacterIndex--;
-
 }
 
 
