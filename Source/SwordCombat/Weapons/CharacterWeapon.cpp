@@ -27,7 +27,7 @@ void ACharacterWeapon::OnPrimaryAttack(){
 
 void ACharacterWeapon::PrimaryAttack() {
 	//Play montage and set character is ready to attacking to false. 
-	float MontageTime = CombatCharacter->GetMesh()->GetAnimInstance()->Montage_Play(PrimaryAttackCombos[PrimaryAttackIndex], 1.0f, EMontagePlayReturnType::MontageLength, 0);
+	float MontageTime = CombatCharacter->GetMesh()->GetAnimInstance()->Montage_Play(PrimaryAttackCombos[PrimaryAttackIndex], CombatCharacter->GetDex(), EMontagePlayReturnType::MontageLength, 0);
 	CombatCharacter->DisableAttackingForCertainTime(MontageTime / 3);
 
 	//Set min max times for combo trigger. 

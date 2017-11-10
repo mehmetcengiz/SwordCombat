@@ -96,8 +96,9 @@ void ASwordCombatCharacter::BeginPlay(){
 	SwitchCharacterState(ECharacterState::COMBAT);
 
 	//TODO Later set animation instance depends on weapon for every enemy. 
-	if (this->ActorHasTag(FName("Player"))){
+	if (GetController()->IsPlayerController()){
 		SetAnimationInstanceToDefault();
+		Dex = 1.5f;
 	}
 	CurrentHealth = MaxHealth;
 

@@ -148,6 +148,8 @@ public:
 	float DisableAttackingOnHitTime = 0.2f;
 
 
+	float GetDex() const { return Dex; }
+	
 private:
 	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;
 	bool bIsReadyToAttack = true;
@@ -163,6 +165,10 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite,Category="Character Stats")
 	float CurrentHealth = 0;
+	
+	UPROPERTY(EditDefaultsOnly,Category="Character Stats")
+	float Dex = 1;
+
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 	TSubclassOf<UAnimInstance> DefaultAnimation;
