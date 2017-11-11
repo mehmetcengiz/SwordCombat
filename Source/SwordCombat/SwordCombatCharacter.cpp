@@ -135,11 +135,14 @@ void ASwordCombatCharacter::ToggleFocusToCharacter(){
 		bIsCharacterFocused = false;
 		GetCharacterMovement()->MaxWalkSpeed = DefaultSpeed;
 		CameraBoom->bUsePawnControlRotation = true;
+		CameraBoom->bEnableCameraRotationLag = false;
 	}
 	else if (!bIsCharacterFocused){
 		bIsCharacterFocused = true;
 		GetCharacterMovement()->MaxWalkSpeed = FocusedSpeed;
 		CameraBoom->bUsePawnControlRotation = false;
+		CameraBoom->bEnableCameraRotationLag = true;
+		CameraBoom->CameraRotationLagSpeed = 20;
 	}
 
 }
