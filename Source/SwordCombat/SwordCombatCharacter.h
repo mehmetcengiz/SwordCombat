@@ -30,14 +30,10 @@ class ASwordCombatCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;	
-	
+
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite,Category= "Combat Component")
 	UCharacterState* CharacterState = nullptr;
-
-	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-	/** Returns FollowCamera subobject **/
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 
 	/*Inventory*/
@@ -45,12 +41,18 @@ class ASwordCombatCharacter : public ACharacter
 	UInventory* CharacterInventory = nullptr;
 
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	ACharacterWeapon* GetPrimaryWeapon() const;
 
-protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 	TSubclassOf<UAnimInstance> DefaultAnimation;
+	
+public:
+	/** Returns CameraBoom subobject **/
+	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	/** Returns FollowCamera subobject **/
+	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	ACharacterWeapon* GetPrimaryWeapon() const;
 	/*
 	 *End Components 
 	 */
@@ -67,8 +69,8 @@ protected:
 	/*Setup*/
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	void SetDodgingMontages(UAnimMontage* Forward, UAnimMontage* Backward, UAnimMontage* Left, UAnimMontage* Right);
 public:
+	void SetDodgingMontages(UAnimMontage* Forward, UAnimMontage* Backward, UAnimMontage* Left, UAnimMontage* Right);
 	UFUNCTION(BlueprintCallable, Category = "Animations")
 	void SetAnimationInstance(UClass* AnimInstanceToSet);
 
@@ -87,7 +89,6 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Character Stats")
 	float Dex = 1;
-	float GetDex() const { return Dex; }
 
 	UPROPERTY(EditDefaultsOnly, Category = "Character")
 	float FocusedSpeed = 325;
@@ -97,6 +98,7 @@ protected:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Character State")
 	void SwitchCharacterState(ECharacterState CharacterStateEnum);
+	float GetDex() const { return Dex; }
 
 public:
 	/*Controls and Mechanics*/
@@ -127,8 +129,6 @@ protected:
 	bool bIsCharacterFocused = false; // TODO make private later.
 	int32 FocusedCharacterIndex = 0; // TODO make private later.
 
-	UFUNCTION(BlueprintCallable, Category = "Attacking")
-	bool GetIsFocusedToEnemy() const { return bIsCharacterFocused; }
 
 	UPROPERTY()
 	TArray<AActor*> CloseAttackerList;
@@ -170,6 +170,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	float GetRightValue() const { return MoveRightValue; }
+
+	UFUNCTION(BlueprintCallable, Category = "Attacking")
+	bool GetIsFocusedToEnemy() const { return bIsCharacterFocused; }
 
 	void DisableAttackingForCertainTime(float TimeToDisable);
 	void DisableAttacking();
