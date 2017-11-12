@@ -17,6 +17,11 @@ UCLASS(config=Game)
 class ASwordCombatCharacter : public ACharacter
 {
 	GENERATED_BODY()
+	
+	
+	/*
+	 *Components
+	 */
 
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -24,49 +29,88 @@ class ASwordCombatCharacter : public ACharacter
 
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* FollowCamera;
-
-public:
-	ASwordCombatCharacter();
-
-	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
-	float BaseTurnRate;
-
+	class UCameraComponent* FollowCamera;	
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite,Category= "Combat Component")
 	UCharacterState* CharacterState = nullptr;
-	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
-	float BaseLookUpRate;
 
-	void SetDodgingMontages(UAnimMontage* Forward, UAnimMontage* Backward, UAnimMontage* Left, UAnimMontage* Right);
-protected:
-	// APawn interface
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	// End of APawn interface
-
-	UAnimMontage* DodgeForward = nullptr;
-	UAnimMontage* DodgeBackward = nullptr;
-	UAnimMontage* DodgeLeft = nullptr;
-	UAnimMontage* DodgeRight = nullptr;
-
-public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
+
+	/*Inventory*/
+	UPROPERTY(Category = "Character", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UInventory* CharacterInventory = nullptr;
+
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	ACharacterWeapon* GetPrimaryWeapon() const;
+
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+	TSubclassOf<UAnimInstance> DefaultAnimation;
+	/*
+	 *End Components 
+	 */
+	
+	/*Constructer,Beginplay,Tick*/
+public:
+	ASwordCombatCharacter();
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+
+	
+	/*Setup*/
+protected:
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	void SetDodgingMontages(UAnimMontage* Forward, UAnimMontage* Backward, UAnimMontage* Left, UAnimMontage* Right);
+public:
+	UFUNCTION(BlueprintCallable, Category = "Animations")
+	void SetAnimationInstance(UClass* AnimInstanceToSet);
+
+	UFUNCTION(BlueprintCallable, Category = "Animations")
+	void SetAnimationInstanceToDefault();
+	void SetPlayerRotationToFocusedEnemy();
+
+	/*End Setters*/
+
+	/*Character Stats*/
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Character Stats")
+	float MaxHealth = 100;
+	UPROPERTY(BlueprintReadWrite, Category = "Character Stats")
+	float CurrentHealth = 0;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Character Stats")
+	float Dex = 1;
+	float GetDex() const { return Dex; }
+
+	UPROPERTY(EditDefaultsOnly, Category = "Character")
+	float FocusedSpeed = 325;
+	UPROPERTY(EditDefaultsOnly, Category = "Character")
+	float DefaultSpeed = 400;
+
+public:
 	UFUNCTION(BlueprintCallable, Category = "Character State")
 	void SwitchCharacterState(ECharacterState CharacterStateEnum);
 
+public:
+	/*Controls and Mechanics*/
+	
+	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
+	float BaseTurnRate;
+
+	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
+	float BaseLookUpRate;
+
 protected:
-
-
-	// Called when the game starts
-	virtual void BeginPlay() override;
-	void SetPlayerRotationToFocusedEnemy();
-	virtual void Tick(float DeltaTime) override;
-
+	/*Focusing control*/
 	UFUNCTION(BlueprintCallable, Category = "Attacking")
 	void AddActorToCloseAttackerList(AActor* ActorToFocus);
 	UFUNCTION(BlueprintCallable, Category = "Attacking")
@@ -110,25 +154,14 @@ protected:
 	/**Executes when PrimaryAttack pressed.*/
 	void OnRightButtonPressed();
 	
-	/*Inventory*/
-	UPROPERTY(Category = "Character", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	UInventory* CharacterInventory = nullptr;
-	
-	UPROPERTY(EditDefaultsOnly,Category = "Character")
-	float FocusedSpeed = 325;
-	UPROPERTY(EditDefaultsOnly,Category = "Character")
-	float DefaultSpeed = 400;
+private:
+	UAnimMontage* DodgeForward = nullptr;
+	UAnimMontage* DodgeBackward = nullptr;
+	UAnimMontage* DodgeLeft = nullptr;
+	UAnimMontage* DodgeRight = nullptr;
 
 public:
-	UFUNCTION(BlueprintCallable,Category="Animations")
-	void SetAnimationInstance(UClass* AnimInstanceToSet);
-	
-	UFUNCTION(BlueprintCallable, Category = "Animations")
-	void SetAnimationInstanceToDefault();
 
-	UFUNCTION(BlueprintCallable,Category="Weapon")
-	ACharacterWeapon* GetPrimaryWeapon() const;
-	
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void EquipWeapon(UClass* WeaponClass);
 
@@ -156,32 +189,15 @@ public:
 
 	float DisableAttackingOnHitTime = 0.2f;
 
-
-	float GetDex() const { return Dex; }
 	
 private:
 	ECharacterState CurrentCharacterState = ECharacterState::INTERACT;
 	bool bIsReadyToAttack = true;
 	
-private:
 	void PlayDeath();
 	void DisableFromWorld();
 
-
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite,Category="Character Stats")
-	float MaxHealth = 100;
-
-	UPROPERTY(BlueprintReadWrite,Category="Character Stats")
-	float CurrentHealth = 0;
-	
-	UPROPERTY(EditDefaultsOnly,Category="Character Stats")
-	float Dex = 1;
-
-
-	UPROPERTY(EditDefaultsOnly, Category = "Animations")
-	TSubclassOf<UAnimInstance> DefaultAnimation;
-
 	float MoveForwardValue = 0;
 	float MoveRightValue = 0;
 
