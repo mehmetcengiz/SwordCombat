@@ -14,6 +14,7 @@
 #include "./CharacterComponents/Inventory.h"
 #include "./Weapons/CharacterWeapon.h"
 #include "./Components/SkeletalMeshComponent.h"
+#include "Animation/AnimInstance.h"
 #include "TimerManager.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -63,6 +64,8 @@ ASwordCombatCharacter::ASwordCombatCharacter(){
 //////////////////////////////////////////////////////////////////////////
 // Input
 
+
+
 void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent){
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
@@ -71,6 +74,7 @@ void ASwordCombatCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAction("FocusToEnemy", IE_Pressed, this, &ASwordCombatCharacter::ToggleFocusToCharacter);
 	PlayerInputComponent->BindAction("FocusNextTarget", IE_Pressed, this, &ASwordCombatCharacter::FocusToNextEnemy);
 	PlayerInputComponent->BindAction("FocusPrevTarget", IE_Pressed, this, &ASwordCombatCharacter::FocusToPrevEnemy);
+	PlayerInputComponent->BindAction("Dodge", IE_Pressed, this, &ASwordCombatCharacter::Dodge);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASwordCombatCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASwordCombatCharacter::MoveRight);
@@ -105,7 +109,6 @@ void ASwordCombatCharacter::BeginPlay(){
 }
 
 void ASwordCombatCharacter::SetPlayerRotationToFocusedEnemy(){
-	UE_LOG(LogTemp, Warning, TEXT("Player is focusing !!!!!!!!!!!!"));
 	if (!(CloseAttackerList.Num() > FocusedCharacterIndex)){ return; }
 	FVector Direction = CloseAttackerList[FocusedCharacterIndex]->GetActorLocation() - GetActorLocation();
 	FRotator DesiredActorRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
@@ -337,6 +340,31 @@ void ASwordCombatCharacter::ResetCharacter(){
 	bIsReadyToAttack = true;
 }
 
+void ASwordCombatCharacter::Dodge(){
+	if (!bIsCharacterFocused) { return; }
+	if (DodgeForward == NULL || DodgeBackward == NULL || DodgeLeft == NULL || DodgeRight == NULL) { return; }
+		
+	float MontageTime;
+	if(FMath::Abs(MoveForwardValue) > FMath::Abs(MoveRightValue)){
+		if(MoveForwardValue>0){
+			//Dodge Forward.
+			MontageTime = GetMesh()->GetAnimInstance()->Montage_Play(DodgeForward, Dex, EMontagePlayReturnType::MontageLength, 0);
+		}else{
+			//Dodge Backward.
+			MontageTime = GetMesh()->GetAnimInstance()->Montage_Play(DodgeBackward, Dex, EMontagePlayReturnType::MontageLength, 0);
+		}
+	}else{
+		if(MoveRightValue <= 0){
+			//Left Dodge.
+			MontageTime = GetMesh()->GetAnimInstance()->Montage_Play(DodgeLeft, Dex, EMontagePlayReturnType::MontageLength, 0);
+		}else{
+			//Right Dodge.
+			MontageTime = GetMesh()->GetAnimInstance()->Montage_Play(DodgeRight, Dex, EMontagePlayReturnType::MontageLength, 0);
+		}
+	}
+
+}
+
 void ASwordCombatCharacter::PlayDeath(){
 	bIsDeath = true;
 	DisableInput(GetController()->CastToPlayerController());
@@ -346,4 +374,11 @@ void ASwordCombatCharacter::PlayDeath(){
 
 void ASwordCombatCharacter::DisableFromWorld(){
 	SetActorEnableCollision(false);
+}
+
+void ASwordCombatCharacter::SetDodgingMontages(UAnimMontage* Forward, UAnimMontage* Backward, UAnimMontage* Left, UAnimMontage* Right) {
+	DodgeForward = Forward;
+	DodgeBackward = Backward;
+	DodgeLeft = Left;
+	DodgeRight = Right;
 }

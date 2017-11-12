@@ -32,6 +32,7 @@ void UCombatState::DrawPrimaryWeapon() {
 
 	//TODO Set weapon animation to character.
 	Character->SetAnimationInstance(CharacterWeapon->GetWeaponAnimInstance());
+	Character->SetDodgingMontages(CharacterWeapon->DodgeForward, CharacterWeapon->DodgeBackward, CharacterWeapon->DodgeLeft, CharacterWeapon->DodgeRight);
 
 }
 

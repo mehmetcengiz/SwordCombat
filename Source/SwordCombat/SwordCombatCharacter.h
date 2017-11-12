@@ -11,6 +11,7 @@
 class UCharacterState;
 class ACharacterWeapon;
 class UInventory;
+class UAnimMontage;
 
 UCLASS(config=Game)
 class ASwordCombatCharacter : public ACharacter
@@ -37,10 +38,17 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
+
+	void SetDodgingMontages(UAnimMontage* Forward, UAnimMontage* Backward, UAnimMontage* Left, UAnimMontage* Right);
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
+
+	UAnimMontage* DodgeForward = nullptr;
+	UAnimMontage* DodgeBackward = nullptr;
+	UAnimMontage* DodgeLeft = nullptr;
+	UAnimMontage* DodgeRight = nullptr;
 
 public:
 	/** Returns CameraBoom subobject **/
@@ -137,6 +145,7 @@ public:
 	void TakeHit(float Damage, float DamageLocation);
 	void PutSwordBackToSheath();
 	void ResetCharacter();
+	void Dodge();
 
 	UPROPERTY(BlueprintReadWrite,Category="Animations")
 	bool bGotHit = false;

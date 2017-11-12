@@ -29,15 +29,27 @@ public:
 	
 
 	FName GetWeaponSocketName() const { return WeaponSocketName; }
-	
+		
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+	TArray<UAnimMontage*> PrimaryAttackCombos;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+	UAnimMontage* DodgeForward;//TODO do private later.
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+	UAnimMontage* DodgeBackward;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+	UAnimMontage* DodgeLeft;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+	UAnimMontage* DodgeRight;
 protected:
 
 	UBoxComponent* BoxComponent = nullptr;
 
 	TArray<AActor*> HitActors;	
-	
-	UPROPERTY(EditDefaultsOnly, Category = "Animations")
-	TArray<UAnimMontage*> PrimaryAttackCombos;
+
 
 	UPROPERTY(BlueprintReadOnly, Category = "Character")
 	ASwordCombatCharacter* CombatCharacter = nullptr;
