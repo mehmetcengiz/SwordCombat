@@ -169,7 +169,7 @@ private:
 
 
 protected:
-	UPROPERTY(EditDefaultsOnly,Category="Character Stats")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite,Category="Character Stats")
 	float MaxHealth = 100;
 
 	UPROPERTY(BlueprintReadWrite,Category="Character Stats")

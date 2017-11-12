@@ -108,18 +108,20 @@ void ASwordCombatCharacter::BeginPlay(){
 
 }
 
+void ASwordCombatCharacter::Tick(float DeltaTime){
+	Super::Tick(DeltaTime);
+
+	if (bIsCharacterFocused){
+		if (CloseAttackerList.Num() <= 0){ ToggleFocusToCharacter(); }
+		SetPlayerRotationToFocusedEnemy();
+	}
+}
+
 void ASwordCombatCharacter::SetPlayerRotationToFocusedEnemy(){
 	if (!(CloseAttackerList.Num() > FocusedCharacterIndex)){ return; }
 	FVector Direction = CloseAttackerList[FocusedCharacterIndex]->GetActorLocation() - GetActorLocation();
 	FRotator DesiredActorRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
 	SetActorRotation(DesiredActorRotation);
-}
-
-void ASwordCombatCharacter::Tick(float DeltaTime){
-	if (bIsCharacterFocused){
-		if (CloseAttackerList.Num() <= 0){ ToggleFocusToCharacter(); }
-		SetPlayerRotationToFocusedEnemy();
-	}
 }
 
 void ASwordCombatCharacter::AddActorToCloseAttackerList(AActor* ActorToFocus){
@@ -161,7 +163,6 @@ void ASwordCombatCharacter::FocusToPrevEnemy(){
 	}
 	FocusedCharacterIndex--;
 }
-
 
 void ASwordCombatCharacter::OnRightButtonPressed(){
 	if (CharacterState == NULL){
