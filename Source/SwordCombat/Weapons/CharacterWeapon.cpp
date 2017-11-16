@@ -47,15 +47,13 @@ void ACharacterWeapon::PrimaryAttack() {
 void ACharacterWeapon::OnSwordHit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
 	const FHitResult& SweepResult) {
+	//Enemy cant hit other enemy.
+	if(CombatCharacter->ActorHasTag(FName("Enemy")) && OtherActor->ActorHasTag(FName("Enemy"))){ return; }
 
 	//If actor has tag and actor has not hited before and actor not hited himself.
-	if (OtherActor->ActorHasTag(FName("Enemy")) && !HitActors.Contains(OtherActor->GetOwner()) && OtherActor->GetOwner() != CombatCharacter) {
+	if (!HitActors.Contains(OtherActor->GetOwner()) && OtherActor->GetOwner() != CombatCharacter) {
 		HitActors.Add(OtherActor->GetOwner());
-		//TODO hit to actor.
-		//TODO Get hit location.
-
 		float Angle = GetHitAngle(OtherActor);
-
 		static_cast<ASwordCombatCharacter*>(OtherActor)->TakeHit(30, Angle);//TODO implement damage later.
 	}
 }

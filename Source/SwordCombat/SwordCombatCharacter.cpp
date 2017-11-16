@@ -322,7 +322,7 @@ void ASwordCombatCharacter::PutSwordBackToSheath(){
 }
 
 void ASwordCombatCharacter::TakeHit(float Damage, float DamageLocation){
-	UE_LOG(LogTemp, Warning, TEXT("I tooked hit !!!"));
+	UE_LOG(LogTemp, Warning, TEXT("%s : I tooked hit !!!"),*GetName());
 	//TODO Play Animation. 
 	bGotHit = true;
 	bIsReadyToAttack = false;
