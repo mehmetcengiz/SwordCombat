@@ -14,7 +14,8 @@ class SWORDCOMBAT_API ASwordCombatAIController : public AAIController
 {
 	GENERATED_BODY()
 	
-	
+public:
+	void PrimaryAttack();
 	
 	
 };

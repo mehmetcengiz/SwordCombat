@@ -100,7 +100,6 @@ public:
 	void SwitchCharacterState(ECharacterState CharacterStateEnum);
 	float GetDex() const { return Dex; }
 
-public:
 	/*Controls and Mechanics*/
 	
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
@@ -110,6 +109,10 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
+
+
+	/**Executes when PrimaryAttack pressed.*/
+	void OnRightButtonPressed();
 
 protected:
 	/*Focusing control*/
@@ -151,8 +154,6 @@ protected:
 	 */
 	void LookUpAtRate(float Rate);
 
-	/**Executes when PrimaryAttack pressed.*/
-	void OnRightButtonPressed();
 	
 private:
 	UAnimMontage* DodgeForward = nullptr;
