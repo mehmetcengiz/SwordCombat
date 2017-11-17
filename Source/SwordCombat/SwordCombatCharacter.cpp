@@ -164,6 +164,13 @@ void ASwordCombatCharacter::FocusToPrevEnemy(){
 	FocusedCharacterIndex--;
 }
 
+void ASwordCombatCharacter::FocusToSpecificEnemy(AActor* ActorToFocus){
+	if (CloseAttackerList.Contains(ActorToFocus)) { return; }
+	CloseAttackerList.Add(ActorToFocus);
+	FocusedCharacterIndex = 0;
+}
+
+
 void ASwordCombatCharacter::OnRightButtonPressed(){
 	if (CharacterState == NULL){
 		UE_LOG(LogTemp, Error, TEXT("CharacterState is null!!"));
@@ -322,6 +329,9 @@ void ASwordCombatCharacter::PutSwordBackToSheath(){
 }
 
 void ASwordCombatCharacter::TakeHit(float Damage, float DamageLocation){
+	//When character dodge
+	if (!bIsCharacterHitable) { return; }
+
 	UE_LOG(LogTemp, Warning, TEXT("%s : I tooked hit !!!"),*GetName());
 	//TODO Play Animation. 
 	bGotHit = true;
@@ -344,7 +354,9 @@ void ASwordCombatCharacter::ResetCharacter(){
 void ASwordCombatCharacter::Dodge(){
 	if (!bIsCharacterFocused) { return; }
 	if (DodgeForward == NULL || DodgeBackward == NULL || DodgeLeft == NULL || DodgeRight == NULL) { return; }
-		
+
+	bIsCharacterHitable = false;
+	
 	float MontageTime;
 	if(FMath::Abs(MoveForwardValue) > FMath::Abs(MoveRightValue)){
 		if(MoveForwardValue>0){
@@ -364,6 +376,13 @@ void ASwordCombatCharacter::Dodge(){
 		}
 	}
 
+	FTimerHandle Handle;
+	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::EnableHitable, MontageTime, false);
+
+}
+
+void ASwordCombatCharacter::EnableHitable(){
+	bIsCharacterHitable = true;
 }
 
 void ASwordCombatCharacter::PlayDeath(){

@@ -128,11 +128,13 @@ protected:
 	void FocusToNextEnemy();
 	UFUNCTION(BlueprintCallable, Category = "Attacking")
 	void FocusToPrevEnemy();
+	UFUNCTION(BlueprintCallable, Category = "Attacking")
+	void FocusToSpecificEnemy(AActor* ActorToFocus);
 
-	bool bIsCharacterFocused = false; // TODO make private later.
-	int32 FocusedCharacterIndex = 0; // TODO make private later.
-
-
+	bool bIsCharacterFocused = false;	// TODO make private later.
+	
+	int32 FocusedCharacterIndex = 0;	// TODO make private later.
+	
 	UPROPERTY()
 	TArray<AActor*> CloseAttackerList;
 
@@ -160,6 +162,7 @@ private:
 	UAnimMontage* DodgeBackward = nullptr;
 	UAnimMontage* DodgeLeft = nullptr;
 	UAnimMontage* DodgeRight = nullptr;
+	bool bIsCharacterHitable = true;
 
 public:
 
@@ -183,6 +186,7 @@ public:
 	void PutSwordBackToSheath();
 	void ResetCharacter();
 	void Dodge();
+	void EnableHitable();
 
 	UPROPERTY(BlueprintReadWrite,Category="Animations")
 	bool bGotHit = false;
