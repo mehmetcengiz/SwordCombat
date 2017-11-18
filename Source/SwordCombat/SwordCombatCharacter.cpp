@@ -387,7 +387,7 @@ void ASwordCombatCharacter::EnableHitable(){
 
 void ASwordCombatCharacter::PlayDeath(){
 	bIsDeath = true;
-	DisableInput(GetController()->CastToPlayerController());
+	StopAnimMontage();
 	FTimerHandle Handle;
 	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::DisableFromWorld, 2, false);
 }
