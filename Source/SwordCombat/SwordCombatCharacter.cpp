@@ -119,9 +119,7 @@ void ASwordCombatCharacter::Tick(float DeltaTime){
 
 void ASwordCombatCharacter::SetPlayerRotationToFocusedEnemy(){
 	if (!(CloseAttackerList.Num() > FocusedCharacterIndex)){ return; }
-	FVector Direction = CloseAttackerList[FocusedCharacterIndex]->GetActorLocation() - GetActorLocation();
-	FRotator DesiredActorRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
-	SetActorRotation(DesiredActorRotation);
+	FaceToEnemy(CloseAttackerList[FocusedCharacterIndex]);
 }
 
 void ASwordCombatCharacter::AddActorToCloseAttackerList(AActor* ActorToFocus){
