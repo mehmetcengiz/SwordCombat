@@ -61,7 +61,7 @@ void UInventory::UseItem(FInventoryItem Item){
 		UE_LOG(LogTemp, Warning, TEXT("Item Type HELMET"));
 		break;
 	case EItemType::POTION:
-		UE_LOG(LogTemp, Warning, TEXT("Item Type POTION"));
+		UsePotion(Item);
 		break;
 	default: ;
 	}
@@ -79,5 +79,11 @@ void UInventory::UseWeapon(FInventoryItem Item){
 	UE_LOG(LogTemp, Warning, TEXT("Item Type WEAPON"));
 	//TODO Update inventory character slot.
 	Cast<ASwordCombatCharacter>(GetOwner())->EquipWeapon(Item.ItemClass);
+
+}
+
+void UInventory::UsePotion(FInventoryItem Item) {
+	UE_LOG(LogTemp, Warning, TEXT("Item Type POTION"));
+	if (Item.Quantity <= 0) { return; }
 
 }

@@ -110,6 +110,7 @@ private:
 	int32 InventorySize = 20;
 
 	void UseWeapon(FInventoryItem Item);
+	void UsePotion(FInventoryItem Item);
 
 	
 };
