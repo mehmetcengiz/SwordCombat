@@ -12,3 +12,9 @@ void ASwordCombatAIController::PrimaryAttack(){
 	Character->OnRightButtonPressed();
 
 }
+
+void ASwordCombatAIController::FaceToEnemy(AActor * EnemyToFace){
+	auto Character = Cast<ASwordCombatCharacter>(GetControlledPawn());
+	if (!ensure(Character)) { return; }
+	Character->FaceToEnemy(EnemyToFace);
+}

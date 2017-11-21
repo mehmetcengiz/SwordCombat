@@ -187,6 +187,7 @@ public:
 	void ResetCharacter();
 	void Dodge();
 	void EnableHitable();
+	void FaceToEnemy(AActor* EnemyToFace);
 
 	UPROPERTY(BlueprintReadWrite,Category="Animations")
 	bool bGotHit = false;

@@ -16,6 +16,6 @@ class SWORDCOMBAT_API ASwordCombatAIController : public AAIController
 	
 public:
 	void PrimaryAttack();
-	
+	void FaceToEnemy(AActor* EnemyToFace);
 	
 };

@@ -385,6 +385,14 @@ void ASwordCombatCharacter::EnableHitable(){
 	bIsCharacterHitable = true;
 }
 
+void ASwordCombatCharacter::FaceToEnemy(AActor * EnemyToFace){
+	if (EnemyToFace == NULL) { return; }
+	FVector Direction = EnemyToFace->GetActorLocation() - GetActorLocation();
+	FRotator DesiredActorRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
+	SetActorRotation(DesiredActorRotation);
+
+}
+
 void ASwordCombatCharacter::PlayDeath(){
 	bIsDeath = true;
 	StopAnimMontage();

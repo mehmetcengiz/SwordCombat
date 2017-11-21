@@ -15,7 +15,11 @@ EBTNodeResult::Type UAttackToEnemy::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	auto SwordCombatAI = Cast<ASwordCombatAIController>(ControlledAI);
 	if (!ensure(SwordCombatAI)) { return EBTNodeResult::Failed; }
 
+	auto BlackboardComp = OwnerComp.GetBlackboardComponent();
+	AActor* EnemyToFace = Cast<AActor>(BlackboardComp->GetValueAsObject(Enemy.SelectedKeyName));
 	
+
+	SwordCombatAI->FaceToEnemy(EnemyToFace);
 	SwordCombatAI->PrimaryAttack();
 	return EBTNodeResult::Type::Succeeded;
 }
