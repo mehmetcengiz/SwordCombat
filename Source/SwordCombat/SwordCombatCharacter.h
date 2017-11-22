@@ -210,6 +210,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly,Category="Sound")
 	USoundBase* GotHitSound;
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundBase* DeathSound;
 
 };
 

@@ -400,6 +400,12 @@ void ASwordCombatCharacter::FaceToEnemy(AActor * EnemyToFace){
 void ASwordCombatCharacter::PlayDeath(){
 	bIsDeath = true;
 	StopAnimMontage();
+	//Play Sound
+	if (GotHitSound != NULL) {
+		FVector ActorLocation;
+		ActorLocation = GetActorLocation();
+		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, ActorLocation);
+	}
 	FTimerHandle Handle;
 	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::DisableFromWorld, 2, false);
 }
