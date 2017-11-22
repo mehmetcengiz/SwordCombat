@@ -35,12 +35,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite,Category= "Combat Component")
 	UCharacterState* CharacterState = nullptr;
 
-
 	/*Inventory*/
 	UPROPERTY(Category = "Character", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UInventory* CharacterInventory = nullptr;
-
-
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 	TSubclassOf<UAnimInstance> DefaultAnimation;
@@ -156,7 +153,7 @@ protected:
 	 */
 	void LookUpAtRate(float Rate);
 
-	
+	/**Animations and Sounds*/
 private:
 	UAnimMontage* DodgeForward = nullptr;
 	UAnimMontage* DodgeBackward = nullptr;
@@ -210,6 +207,9 @@ protected:
 	float MoveForwardValue = 0;
 	float MoveRightValue = 0;
 
+
+	UPROPERTY(EditDefaultsOnly,Category="Sound")
+	USoundBase* GotHitSound;
 
 };
 

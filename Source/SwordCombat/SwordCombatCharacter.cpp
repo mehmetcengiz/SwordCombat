@@ -16,6 +16,7 @@
 #include "./Components/SkeletalMeshComponent.h"
 #include "Animation/AnimInstance.h"
 #include "TimerManager.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASwordCombatCharacter
@@ -330,13 +331,18 @@ void ASwordCombatCharacter::TakeHit(float Damage, float DamageLocation){
 	//When character dodge
 	if (!bIsCharacterHitable) { return; }
 
-	UE_LOG(LogTemp, Warning, TEXT("%s : I tooked hit !!!"),*GetName());
 	//TODO Play Animation. 
 	bGotHit = true;
 	bIsReadyToAttack = false;
 	FTimerHandle Handle;
 	LastDamageLocation = DamageLocation;
 	GetWorld()->GetTimerManager().SetTimer(OUT Handle, this, &ASwordCombatCharacter::ResetCharacter, DisableAttackingOnHitTime, false);
+	//Play Sound
+	if (GotHitSound != NULL) {
+		FVector ActorLocation;
+		ActorLocation = GetActorLocation();
+		UGameplayStatics::PlaySoundAtLocation(this, GotHitSound, ActorLocation);
+	}
 	//TODO Apply damage.
 	CurrentHealth -= Damage;
 	if (CurrentHealth <= 0){
